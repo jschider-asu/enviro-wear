@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EmergencySensorUnitTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear.test</a> &gt; <span class="el_source">EmergencySensorUnitTest.java</span></div><h1>EmergencySensorUnitTest.java</h1><pre class="source lang-java linenums">package envirowear.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import envirowear.EmergencySensorUnit;
+
+<span class="nc" id="L9">class EmergencySensorUnitTest {</span>
+	
+
+	@Test
+	void testEmergencySensorUnit() {
+		
+<span class="nc" id="L15">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L17">		assertEquals(false,esu.getOverride(),&quot;Failed to initialize emergencyoverride.&quot;);</span>
+<span class="nc" id="L18">		assertEquals(false,esu.getE_coolerStatus(),&quot;Failed to initialize e_coolerStatus.&quot;);</span>
+<span class="nc" id="L19">		assertEquals(false,esu.getE_heaterStatus(),&quot;Failed to initialize e_heaterStatus.&quot;);</span>
+		
+<span class="nc" id="L21">	}</span>
+
+	@Test
+	void testSetDesiredTemp() {
+<span class="nc" id="L25">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+		try {
+<span class="nc" id="L28">			esu.setDesiredTemp(70);</span>
+<span class="nc" id="L29">		} catch(Exception e) {</span>
+<span class="nc" id="L30">			fail(&quot;Failed to set desired temp.&quot;);</span>
+		}
+<span class="nc" id="L32">	}</span>
+
+	@Test
+	void testGetE_heaterStatus() {
+<span class="nc" id="L36">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L38">		assertEquals(false,esu.getE_heaterStatus(),&quot;Failed to get e_heater status.&quot;);</span>
+<span class="nc" id="L39">	}</span>
+
+	@Test
+	void testGetE_coolerStatus() {
+<span class="nc" id="L43">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L45">		assertEquals(false,esu.getE_coolerStatus(),&quot;Failed to get e_cooler status.&quot;);</span>
+<span class="nc" id="L46">	}</span>
+
+	@Test
+	void testSetE_heaterStatus() {
+<span class="nc" id="L50">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L52">		esu.setE_heaterStatus(true);</span>
+		
+<span class="nc" id="L54">		assertTrue(esu.getE_heaterStatus(),&quot;Failed to set the e_heater status.&quot;);</span>
+<span class="nc" id="L55">	}</span>
+
+	@Test
+	void testSetE_coolerStatus() {
+<span class="nc" id="L59">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L61">		esu.setE_coolerStatus(true);</span>
+		
+<span class="nc" id="L63">		assertTrue(esu.getE_coolerStatus(),&quot;Failed to set the e_cooler status.&quot;);</span>
+<span class="nc" id="L64">	}</span>
+
+	@Test
+	void testGetHeaterOverrideStatus() {
+<span class="nc" id="L68">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L70">		assertFalse(esu.getHeaterOverrideStatus(),&quot;Failed to get the heater override status&quot;);</span>
+<span class="nc" id="L71">	}</span>
+
+	@Test
+	void testGetCoolerOverrideStatus() {
+<span class="nc" id="L75">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L77">		assertFalse(esu.getCoolerOverrideStatus(),&quot;Failed to get the cooler override status&quot;);</span>
+<span class="nc" id="L78">	}</span>
+
+	@Test
+	void testGetOverride() {
+<span class="nc" id="L82">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L84">		assertFalse(esu.getOverride(),&quot;Failed to get emergencyoverride.&quot;);</span>
+<span class="nc" id="L85">	}</span>
+
+	@Test
+	void testLowerBodyTemp() {
+<span class="nc" id="L89">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L91">		assertFalse(esu.getLowerBodyTemp(),&quot;Failed to get lower body temp status.&quot;);</span>
+<span class="nc" id="L92">	}</span>
+
+	@Test
+	void testRaiseBodyTemp() {
+<span class="nc" id="L96">		EmergencySensorUnit esu = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+		
+<span class="nc" id="L98">		assertFalse(esu.getRaiseBodyTemp(),&quot;Failed to get raise body temp status.&quot;);</span>
+<span class="nc" id="L99">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>

@@ -4,31 +4,52 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import envirowear.CoolingUnit;
+
 class CoolingUnitTest {
+
+	//Run is a method from Thread class extension.
+//	@Test
+//	void testRun() {
+//		fail("No Code to test.");
+//	}
 
 	@Test
 	void testCoolingUnit() {
-		fail("Not yet implemented");
+		//Need to test that the three member vars where created.
+		CoolingUnit cu = new CoolingUnit("shirt","front");
+		
+		assertEquals("shirt",cu.getType(),"Constructor failed to initialize correctly.");
+		assertEquals("front",cu.getPosition(),"Constructor failed to initialize correctly.");
+		assertEquals(false,cu.getRunningStatus(),"Constructor failed to initialize correctly.");
 	}
 
 	@Test
 	void testGetRunningStatus() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetFanStatus() {
-		fail("Not yet implemented");
+		//Running[Status] defaults to false;
+		CoolingUnit cu = new CoolingUnit("shirt","front");
+		
+		assertEquals(false, cu.getRunningStatus(), "The status did not return correctly.");
 	}
 
 	@Test
 	void testStartCooling() {
-		fail("Not yet implemented");
+		CoolingUnit cu = new CoolingUnit("shirt","front");
+		
+		assertEquals(true, cu.startCooling(),"Failed to start cooling properly.");
+		
+		assertEquals(false, cu.startCooling(),"Failed to keep running while already running.");
 	}
 
 	@Test
 	void testStopCooling() {
-		fail("Not yet implemented");
+		CoolingUnit cu = new CoolingUnit("shirt","front");
+		
+		cu.startCooling();
+		
+		assertEquals(true, cu.stopCooling(),"Failed to stop cooling properly.");
+		
+		assertEquals(false, cu.stopCooling(),"Failed to keep stopped while already stopped.");
 	}
 
 }

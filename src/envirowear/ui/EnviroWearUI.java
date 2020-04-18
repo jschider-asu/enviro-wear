@@ -1,9 +1,7 @@
 package envirowear.ui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -11,16 +9,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
+@SuppressWarnings("serial")
 public class EnviroWearUI extends JFrame implements ActionListener {
 
 	private Container pane = getContentPane();
@@ -31,11 +24,6 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 	private JPanel currentShirtpnl;
 	private JPanel currentPantspnl;
 	
-	
-	private JPanel mainNorthpnl;
-	private JPanel mainCenterpnl;
-	private JPanel mainWestpnl;
-	private JPanel mainSouthpnl;
 	private JPanel radioBtnpnl;
 	private JPanel overallpnl;
 	private JPanel individualpnl;
@@ -47,9 +35,9 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 	private JPanel jp;
 	private JPanel jpl;
 	
-	private JComboBox overallTempcbx;
-	private JComboBox shirtTempcbx;
-	private JComboBox pantsTempcbx;
+	private JComboBox<String> overallTempcbx;
+	private JComboBox<String> shirtTempcbx;
+	private JComboBox<String> pantsTempcbx;
 	
 	
 	private JRadioButton overallBtn;
@@ -61,6 +49,10 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 	private JLabel currentTempLbl;
 	private JLabel currentShirtLbl;
 	private JLabel currentPantsLbl;
+	
+	private String currentTempText;
+	private String currentShirtText;
+	private String currentPantsText;
 	
 	private Color currentColor;
 	
@@ -84,10 +76,6 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 		currentShirtpnl = new JPanel(new GridLayout(2,1));
 		currentPantspnl = new JPanel(new GridLayout(2,1));
 		
-		mainNorthpnl = new JPanel(new FlowLayout());
-		mainCenterpnl = new JPanel(new GridLayout(2,1));
-		mainWestpnl = new JPanel(new GridLayout(2,1));
-		mainSouthpnl = new JPanel(new FlowLayout());
 		radioBtnpnl = new JPanel(new GridLayout(2,1));
 		overallpnl = new JPanel(new GridLayout(2,1));
 		individualpnl = new JPanel(new GridLayout(3,1));
@@ -95,15 +83,15 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 		shirtTemppnl = new JPanel(new FlowLayout());
 		pantsTemppnl = new JPanel(new FlowLayout());
 		
-		overallTempcbx = new JComboBox(TEMP_LIST);
+		overallTempcbx = new JComboBox<String>(TEMP_LIST);
 		overallTempcbx.setFont(BIG_FONT);
 		overallTempcbx.setSelectedIndex(12);
 		overallTempcbx.addActionListener(this);
-		shirtTempcbx = new JComboBox(TEMP_LIST);
+		shirtTempcbx = new JComboBox<String>(TEMP_LIST);
 		shirtTempcbx.setFont(BIG_FONT);
 		shirtTempcbx.setSelectedIndex(12);
 		shirtTempcbx.addActionListener(this);
-		pantsTempcbx = new JComboBox(TEMP_LIST);
+		pantsTempcbx = new JComboBox<String>(TEMP_LIST);
 		pantsTempcbx.setFont(BIG_FONT);
 		pantsTempcbx.setSelectedIndex(12);
 		pantsTempcbx.addActionListener(this);
@@ -114,11 +102,16 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 		shirtTempLbl.setFont(BIG_FONT);
 		pantsTempLbl = new JLabel("Select pants temperature:");
 		pantsTempLbl.setFont(BIG_FONT);
-		currentTempLbl = new JLabel("Current Temperature:");
+		
+		currentTempText = "Current Temperature: ";
+		currentShirtText = "Current Shirt Temperature: ";
+		currentPantsText = "Current Pants Temperature: ";
+		
+		currentTempLbl = new JLabel(currentTempText);
 		currentTempLbl.setFont(BIG_FONT);
-		currentShirtLbl = new JLabel("Current Shirt Temperature:");
+		currentShirtLbl = new JLabel(currentShirtText);
 		currentShirtLbl.setFont(BIG_FONT);
-		currentPantsLbl = new JLabel("Current Pants Temperature:");
+		currentPantsLbl = new JLabel(currentShirtText);
 		currentPantsLbl.setFont(BIG_FONT);
 		
 		ButtonGroup group = new ButtonGroup();
@@ -155,31 +148,14 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 	    mainLeftpnl.add(overallpnl);
 	    mainLeftpnl.add(individualpnl);
 	    
-	    //mainLeftpnl.add(radioBtnpnl);
-				
-		setTitle ("EnviroWear Control UI");
-		setSize (900, 650);
-		setLocationRelativeTo (null);
-		//JLabel lblHelloWorld = new JLabel ("Hello World\nWhy no show?");
-		//mainNorthpnl.add(lblHelloWorld);
-		
-		currentColor = Color.GREEN;
-		setCurrentColor(Color.GREEN);
-		
 		p = new JPanel() {
 				
 				public void paintComponent(Graphics g) {
 					Graphics2D g2 = (Graphics2D) g;
-					//Shape line = new Line2D.Double(3, 3, 303, 303);
-					//Shape rect = new Rectangle(3, 3, 303, 303);
-					Shape circle = new Ellipse2D.Double(5, 5, 75, 75);
+					Shape circle = new Ellipse2D.Double(0, 0, 80, 80);
 					g2.setColor(getCurrentColor());
 					g2.fill(circle);
-					//Shape roundRect = new RoundRectangle2D.Double(20, 20, 250, 250, 5, 25);
-					//g2.draw(line);
-					//g2.draw(rect);
 					g2.draw(circle);
-					//g2.draw(roundRect);
 				}
 		};
 		
@@ -187,56 +163,24 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 			
 			public void paintComponent(Graphics g) {
 				Graphics2D g2 = (Graphics2D) g;
-				//Shape line = new Line2D.Double(3, 3, 303, 303);
-				//Shape rect = new Rectangle(3, 3, 303, 303);
-				Shape circle = new Ellipse2D.Double(5, 5, 75, 75);
+				Shape circle = new Ellipse2D.Double(0, 0, 80, 80);
 				g2.setColor(getCurrentColor());
 				g2.fill(circle);
-				//Shape roundRect = new RoundRectangle2D.Double(20, 20, 250, 250, 5, 25);
-				//g2.draw(line);
-				//g2.draw(rect);
 				g2.draw(circle);
-				//g2.draw(roundRect);
 			}
 		};
 		
 		jpl = new JPanel() {
-					
-					public void paintComponent(Graphics g) {
-						Graphics2D g2 = (Graphics2D) g;
-						//Shape line = new Line2D.Double(3, 3, 303, 303);
-						//Shape rect = new Rectangle(3, 3, 303, 303);
-						Shape circle = new Ellipse2D.Double(5, 5, 75, 75);
-						g2.setColor(getCurrentColor());
-						g2.fill(circle);
-						//Shape roundRect = new RoundRectangle2D.Double(20, 20, 250, 250, 5, 25);
-						//g2.draw(line);
-						//g2.draw(rect);
-						g2.draw(circle);
-						//g2.draw(roundRect);
-					}
+			
+			public void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D) g;
+				Shape circle = new Ellipse2D.Double(0, 0, 80, 80);
+				g2.setColor(getCurrentColor());
+				g2.fill(circle);
+				g2.draw(circle);
+			}
 		};
 		
-		
-		//mainWestpnl.add(currentTempLbl);
-		//mainWestpnl.add(p);
-		
-		//BufferedImage myPicture = null;
-		//BufferedImage myPants = null;
-		//try {
-		//	myPicture = ImageIO.read(new File("c:\\Users\\jschider\\Downloads\\shirt.png"));
-		//	myPants = ImageIO.read(new File("c:\\Users\\jschider\\Downloads\\pants.png"));
-		//} catch (IOException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
-		//JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		//mainCenterpnl.add(picLabel);
-		//mainCenterpnl.add(p);
-		//JLabel pantsLabel = new JLabel(new ImageIcon(myPants));
-		//mainCenterpnl.add(pantsLabel);
-		//mainCenterpnl.add(p);
-		//mainNorthpnl.add(mainWestpnl);
 		currentCirclepnl.add(currentTempLbl);
 		currentCirclepnl.add(p);
 		
@@ -252,9 +196,13 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 		
 		mainpnl.add(mainLeftpnl);
 		mainpnl.add(mainRightpnl);
-		//mainpnl.add(mainWestpnl);
+
 		pane.add(mainpnl);
-		//pane.add(p);
+		
+		setTitle ("EnviroWear Control UI");
+		setSize (900, 650);
+		setLocationRelativeTo (null);
+		setCurrentColor(Color.GREEN);
 		
 		setDefaultCloseOperation (EXIT_ON_CLOSE);
 	}
@@ -263,7 +211,6 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		try {
 			//Get the winodows look and feel from Windows
@@ -310,20 +257,23 @@ public class EnviroWearUI extends JFrame implements ActionListener {
 			
 			shirtTempcbx.setSelectedIndex(overallTempcbx.getSelectedIndex());
 			pantsTempcbx.setSelectedIndex(overallTempcbx.getSelectedIndex());
+			
+			currentTempLbl.setText(currentTempText + overallTempcbx.getSelectedItem().toString());
+			currentShirtLbl.setText(currentShirtText + shirtTempcbx.getSelectedItem().toString());
+			currentPantsLbl.setText(currentPantsText + pantsTempcbx.getSelectedItem().toString());
 				
-			//System.out.println("Change color");
 			p.repaint();
 			jp.repaint();
 			jpl.repaint();
 		} else if (e.getSource() == shirtTempcbx) {
 			colorRules(shirtTempcbx.getSelectedIndex());
+			currentShirtLbl.setText(currentShirtText + shirtTempcbx.getSelectedItem().toString());
 			
-			//System.out.println("change jp");
 			jp.repaint();
 		} else if (e.getSource() == pantsTempcbx) {
 			colorRules(pantsTempcbx.getSelectedIndex());
+			currentPantsLbl.setText(currentPantsText + pantsTempcbx.getSelectedItem().toString());
 			
-			//System.out.println("change jp");
 			jpl.repaint();
 		}
 	}

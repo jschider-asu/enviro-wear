@@ -6,25 +6,36 @@ package envirowear;
  * 	portion of clothing it is functioning within.
  *
  */
-public class CoolingUnit {
+public class CoolingUnit extends Thread {
 	
 	private boolean running;
-	private boolean fan;
+	private String type;
+	private String position;
 	
 
 	//Constructor
-	public CoolingUnit() {
+	public CoolingUnit(String clothing, String pos) {
 		running = false;
-		fan = false;
+		type = clothing;
+		position = pos;
+	}
+	
+
+	public void run() {
+		
 	}
 	
 	//Getters
 	public boolean getRunningStatus() {
 		return running;
 	}
-	
-	public boolean getFanStatus() {
-		return fan;
+	//Used for unit testing.
+	public String getType() {
+		return type;
+	}
+	//Used for unit testing.
+	public String getPosition() {
+		return position;
 	}
 	
 	//Setters
@@ -32,18 +43,18 @@ public class CoolingUnit {
 		running = runVal;
 	}
 	
-	private void setFanStatus(boolean fanVal) {
-		fan = fanVal;
-	}
 	
 	//Methods
-	public boolean startCooling(int desiredTemp) {
+	public boolean startCooling() {
 		boolean statusChanged = false;
 		
-		if (!getRunningStatus()  && !getFanStatus()) {
+		if (!getRunningStatus()) {
 			setRunningStatus(true);
-			setFanStatus(true);
 			statusChanged = true;
+		}
+		
+		if(statusChanged == true) {
+			userNotification();
 		}
 		
 		
@@ -54,14 +65,33 @@ public class CoolingUnit {
 	public boolean stopCooling() {
 		boolean statusChanged = false;
 		
-		if (getRunningStatus() && getFanStatus()) {
+		if (getRunningStatus()) {
 			setRunningStatus(false);
-			setFanStatus(false);
 			statusChanged = true;
+		}
+		
+		if(statusChanged == true) {
+			userNotification();
 		}
 		
 		//return if the status changed.
 		return statusChanged;
 		
+	}
+	
+	private void userNotification() {
+		if(type.equals("shirt")) {
+			if(position.equals("front")) {
+				main.setShirtCoolerFront(getRunningStatus());
+			} else {
+				main.setShirtCoolerBack(getRunningStatus());
+			}
+		} else {
+			if(position.equals("front")) {
+				main.setPantsCoolerFront(getRunningStatus());
+			} else {
+				main.setPantsCoolerBack(getRunningStatus());
+			}
+		}
 	}
 }

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EnviroWearUI.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear.ui</a> &gt; <span class="el_source">EnviroWearUI.java</span></div><h1>EnviroWearUI.java</h1><pre class="source lang-java linenums">package envirowear.ui;
+
+import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Shape;
+import java.awt.event.*;
+import java.awt.geom.Ellipse2D;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class EnviroWearUI extends JFrame implements ActionListener {
+
+<span class="nc" id="L19">	private Container pane = getContentPane();</span>
+	private JPanel mainpnl;
+	private JPanel mainLeftpnl;
+	private JPanel mainRightpnl;
+	private JPanel currentCirclepnl;
+	private JPanel currentShirtpnl;
+	private JPanel currentPantspnl;
+	
+	private JPanel radioBtnpnl;
+	private JPanel overallpnl;
+	private JPanel individualpnl;
+	private JPanel overallTemppnl;
+	private JPanel shirtTemppnl;
+	private JPanel pantsTemppnl;
+	
+	private JPanel p;
+	private JPanel jp;
+	private JPanel jpl;
+	
+	private JComboBox&lt;String&gt; overallTempcbx;
+	private JComboBox&lt;String&gt; shirtTempcbx;
+	private JComboBox&lt;String&gt; pantsTempcbx;
+	
+	
+	private JRadioButton overallBtn;
+	private JRadioButton individualBtn;
+	
+	private JLabel overallTempLbl;
+	private JLabel shirtTempLbl;
+	private JLabel pantsTempLbl;
+	private JLabel currentTempLbl;
+	private JLabel currentShirtLbl;
+	private JLabel currentPantsLbl;
+	
+	private String currentTempText;
+	private String currentShirtText;
+	private String currentPantsText;
+	
+	private Color currentColor;
+	
+<span class="nc" id="L59">	private static final Font BIG_FONT = new Font(&quot;Arial&quot;,Font.BOLD, 16);</span>
+<span class="nc" id="L60">	private static final String[] TEMP_LIST = {&quot;60&quot;,&quot;61&quot;,&quot;62&quot;,&quot;63&quot;,&quot;64&quot;,&quot;65&quot;,&quot;66&quot;,&quot;67&quot;,&quot;68&quot;,&quot;69&quot;,&quot;70&quot;,&quot;71&quot;,&quot;72&quot;,&quot;73&quot;,&quot;74&quot;,&quot;75&quot;,&quot;76&quot;,&quot;77&quot;,&quot;78&quot;,&quot;79&quot;,&quot;80&quot;};</span>
+	
+	public Color getCurrentColor() {
+<span class="nc" id="L63">		return currentColor;</span>
+	}
+	
+	public void setCurrentColor(Color color) {
+<span class="nc" id="L67">		currentColor = color;</span>
+<span class="nc" id="L68">	}</span>
+	
+<span class="nc" id="L70">	public EnviroWearUI() {</span>
+		//mainpnl = new JPanel(new BorderLayout());
+<span class="nc" id="L72">		mainpnl = new JPanel(new GridLayout(1,2));</span>
+<span class="nc" id="L73">		mainLeftpnl = new JPanel(new GridLayout(3,1));</span>
+<span class="nc" id="L74">		mainRightpnl = new JPanel(new GridLayout(3,1));</span>
+<span class="nc" id="L75">		currentCirclepnl = new JPanel(new GridLayout(2,1));</span>
+<span class="nc" id="L76">		currentShirtpnl = new JPanel(new GridLayout(2,1));</span>
+<span class="nc" id="L77">		currentPantspnl = new JPanel(new GridLayout(2,1));</span>
+		
+<span class="nc" id="L79">		radioBtnpnl = new JPanel(new GridLayout(2,1));</span>
+<span class="nc" id="L80">		overallpnl = new JPanel(new GridLayout(2,1));</span>
+<span class="nc" id="L81">		individualpnl = new JPanel(new GridLayout(3,1));</span>
+<span class="nc" id="L82">		overallTemppnl = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L83">		shirtTemppnl = new JPanel(new FlowLayout());</span>
+<span class="nc" id="L84">		pantsTemppnl = new JPanel(new FlowLayout());</span>
+		
+<span class="nc" id="L86">		overallTempcbx = new JComboBox&lt;String&gt;(TEMP_LIST);</span>
+<span class="nc" id="L87">		overallTempcbx.setFont(BIG_FONT);</span>
+<span class="nc" id="L88">		overallTempcbx.setSelectedIndex(12);</span>
+<span class="nc" id="L89">		overallTempcbx.addActionListener(this);</span>
+<span class="nc" id="L90">		shirtTempcbx = new JComboBox&lt;String&gt;(TEMP_LIST);</span>
+<span class="nc" id="L91">		shirtTempcbx.setFont(BIG_FONT);</span>
+<span class="nc" id="L92">		shirtTempcbx.setSelectedIndex(12);</span>
+<span class="nc" id="L93">		shirtTempcbx.addActionListener(this);</span>
+<span class="nc" id="L94">		pantsTempcbx = new JComboBox&lt;String&gt;(TEMP_LIST);</span>
+<span class="nc" id="L95">		pantsTempcbx.setFont(BIG_FONT);</span>
+<span class="nc" id="L96">		pantsTempcbx.setSelectedIndex(12);</span>
+<span class="nc" id="L97">		pantsTempcbx.addActionListener(this);</span>
+		
+<span class="nc" id="L99">		overallTempLbl = new JLabel(&quot;Select overall temperature:&quot;);</span>
+<span class="nc" id="L100">		overallTempLbl.setFont(BIG_FONT);</span>
+<span class="nc" id="L101">		shirtTempLbl = new JLabel(&quot;Select shirt temperature:&quot;);</span>
+<span class="nc" id="L102">		shirtTempLbl.setFont(BIG_FONT);</span>
+<span class="nc" id="L103">		pantsTempLbl = new JLabel(&quot;Select pants temperature:&quot;);</span>
+<span class="nc" id="L104">		pantsTempLbl.setFont(BIG_FONT);</span>
+		
+<span class="nc" id="L106">		currentTempText = &quot;Current Temperature: &quot;;</span>
+<span class="nc" id="L107">		currentShirtText = &quot;Current Shirt Temperature: &quot;;</span>
+<span class="nc" id="L108">		currentPantsText = &quot;Current Pants Temperature: &quot;;</span>
+		
+<span class="nc" id="L110">		currentTempLbl = new JLabel(currentTempText);</span>
+<span class="nc" id="L111">		currentTempLbl.setFont(BIG_FONT);</span>
+<span class="nc" id="L112">		currentShirtLbl = new JLabel(currentShirtText);</span>
+<span class="nc" id="L113">		currentShirtLbl.setFont(BIG_FONT);</span>
+<span class="nc" id="L114">		currentPantsLbl = new JLabel(currentShirtText);</span>
+<span class="nc" id="L115">		currentPantsLbl.setFont(BIG_FONT);</span>
+		
+<span class="nc" id="L117">		ButtonGroup group = new ButtonGroup();</span>
+<span class="nc" id="L118">		overallBtn = new JRadioButton(&quot;Overall Temp&quot;);</span>
+<span class="nc" id="L119">		overallBtn.setFont(BIG_FONT);	</span>
+<span class="nc" id="L120">		overallBtn.setSelected(true);</span>
+<span class="nc" id="L121">		individualBtn = new JRadioButton(&quot;Individual Temp&quot;);</span>
+<span class="nc" id="L122">		individualBtn.setFont(BIG_FONT);</span>
+<span class="nc" id="L123">		group.add(overallBtn);</span>
+<span class="nc" id="L124">		group.add(individualBtn);</span>
+	     
+<span class="nc" id="L126">	    overallBtn.addActionListener(this);</span>
+<span class="nc" id="L127">	    individualBtn.addActionListener(this);</span>
+	    
+<span class="nc" id="L129">	    overallTemppnl.add(overallTempLbl);</span>
+<span class="nc" id="L130">	    overallTemppnl.add(overallTempcbx);</span>
+	    
+<span class="nc" id="L132">	    overallpnl.add(overallBtn);</span>
+<span class="nc" id="L133">	    overallpnl.add(overallTemppnl);</span>
+	    
+<span class="nc" id="L135">	    shirtTemppnl.add(shirtTempLbl);</span>
+<span class="nc" id="L136">	    shirtTemppnl.add(shirtTempcbx);</span>
+	    
+<span class="nc" id="L138">	    pantsTemppnl.add(pantsTempLbl);</span>
+<span class="nc" id="L139">	    pantsTemppnl.add(pantsTempcbx);</span>
+	    
+<span class="nc" id="L141">	    individualpnl.add(individualBtn);</span>
+<span class="nc" id="L142">	    individualpnl.add(shirtTemppnl);</span>
+<span class="nc" id="L143">	    individualpnl.add(pantsTemppnl);</span>
+	    
+<span class="nc" id="L145">	    radioBtnpnl.add(overallpnl);</span>
+<span class="nc" id="L146">	    radioBtnpnl.add(individualpnl);</span>
+	    
+<span class="nc" id="L148">	    mainLeftpnl.add(overallpnl);</span>
+<span class="nc" id="L149">	    mainLeftpnl.add(individualpnl);</span>
+	    
+<span class="nc" id="L151">		p = new JPanel() {</span>
+				
+				public void paintComponent(Graphics g) {
+<span class="nc" id="L154">					Graphics2D g2 = (Graphics2D) g;</span>
+<span class="nc" id="L155">					Shape circle = new Ellipse2D.Double(0, 0, 80, 80);</span>
+<span class="nc" id="L156">					g2.setColor(getCurrentColor());</span>
+<span class="nc" id="L157">					g2.fill(circle);</span>
+<span class="nc" id="L158">					g2.draw(circle);</span>
+<span class="nc" id="L159">				}</span>
+		};
+		
+<span class="nc" id="L162">		jp = new JPanel() {</span>
+			
+			public void paintComponent(Graphics g) {
+<span class="nc" id="L165">				Graphics2D g2 = (Graphics2D) g;</span>
+<span class="nc" id="L166">				Shape circle = new Ellipse2D.Double(0, 0, 80, 80);</span>
+<span class="nc" id="L167">				g2.setColor(getCurrentColor());</span>
+<span class="nc" id="L168">				g2.fill(circle);</span>
+<span class="nc" id="L169">				g2.draw(circle);</span>
+<span class="nc" id="L170">			}</span>
+		};
+		
+<span class="nc" id="L173">		jpl = new JPanel() {</span>
+			
+			public void paintComponent(Graphics g) {
+<span class="nc" id="L176">				Graphics2D g2 = (Graphics2D) g;</span>
+<span class="nc" id="L177">				Shape circle = new Ellipse2D.Double(0, 0, 80, 80);</span>
+<span class="nc" id="L178">				g2.setColor(getCurrentColor());</span>
+<span class="nc" id="L179">				g2.fill(circle);</span>
+<span class="nc" id="L180">				g2.draw(circle);</span>
+<span class="nc" id="L181">			}</span>
+		};
+		
+<span class="nc" id="L184">		currentCirclepnl.add(currentTempLbl);</span>
+<span class="nc" id="L185">		currentCirclepnl.add(p);</span>
+		
+<span class="nc" id="L187">		currentShirtpnl.add(currentShirtLbl);</span>
+<span class="nc" id="L188">		currentShirtpnl.add(jp);</span>
+		
+<span class="nc" id="L190">		currentPantspnl.add(currentPantsLbl);</span>
+<span class="nc" id="L191">		currentPantspnl.add(jpl);</span>
+		
+<span class="nc" id="L193">		mainRightpnl.add(currentCirclepnl);</span>
+<span class="nc" id="L194">		mainRightpnl.add(currentShirtpnl);</span>
+<span class="nc" id="L195">		mainRightpnl.add(currentPantspnl);</span>
+		
+<span class="nc" id="L197">		mainpnl.add(mainLeftpnl);</span>
+<span class="nc" id="L198">		mainpnl.add(mainRightpnl);</span>
+
+<span class="nc" id="L200">		pane.add(mainpnl);</span>
+		
+<span class="nc" id="L202">		setTitle (&quot;EnviroWear Control UI&quot;);</span>
+<span class="nc" id="L203">		setSize (900, 650);</span>
+<span class="nc" id="L204">		setLocationRelativeTo (null);</span>
+<span class="nc" id="L205">		setCurrentColor(Color.GREEN);</span>
+		
+<span class="nc" id="L207">		setDefaultCloseOperation (EXIT_ON_CLOSE);</span>
+<span class="nc" id="L208">	}</span>
+	
+	
+
+	
+	public static void main(String[] args) {
+		
+		try {
+			//Get the winodows look and feel from Windows
+<span class="nc" id="L217">			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());</span>
+
+<span class="nc" id="L219">		}</span>
+<span class="nc" id="L220">		catch(Exception e) {</span>
+			//If not a windows machine use JFrame look and feel
+<span class="nc" id="L222">			e.printStackTrace();</span>
+<span class="nc" id="L223">			JFrame.setDefaultLookAndFeelDecorated(true);</span>
+		}
+		
+		
+<span class="nc" id="L227">        javax.swing.SwingUtilities.invokeLater (new Runnable () {</span>
+				@Override
+				public void run () {	
+				
+<span class="nc" id="L231">				EnviroWearUI ui = new EnviroWearUI();</span>
+<span class="nc" id="L232">				ui.setVisible (true);</span>
+				
+<span class="nc" id="L234">				}</span>
+				} );
+<span class="nc" id="L236">		}  //end of void main</span>
+
+
+	public void colorRules(int i) {
+<span class="nc bnc" id="L240" title="All 2 branches missed.">		if(i &gt; 14)</span>
+<span class="nc" id="L241">			setCurrentColor(Color.RED);</span>
+<span class="nc bnc" id="L242" title="All 4 branches missed.">		else if(i &gt; 12 &amp;&amp; i &lt;= 14)</span>
+<span class="nc" id="L243">			setCurrentColor(Color.ORANGE);</span>
+<span class="nc bnc" id="L244" title="All 4 branches missed.">		else if(i &lt;= 12 &amp;&amp; i &gt; 5)</span>
+<span class="nc" id="L245">			setCurrentColor(Color.GREEN);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		else if(i &lt;= 5)</span>
+<span class="nc" id="L247">			setCurrentColor(Color.BLUE);</span>
+<span class="nc" id="L248">	}</span>
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if(e.getSource() == overallTempcbx) {</span>
+			
+<span class="nc" id="L256">			colorRules(overallTempcbx.getSelectedIndex());</span>
+			
+<span class="nc" id="L258">			shirtTempcbx.setSelectedIndex(overallTempcbx.getSelectedIndex());</span>
+<span class="nc" id="L259">			pantsTempcbx.setSelectedIndex(overallTempcbx.getSelectedIndex());</span>
+			
+<span class="nc" id="L261">			currentTempLbl.setText(currentTempText + overallTempcbx.getSelectedItem().toString());</span>
+<span class="nc" id="L262">			currentShirtLbl.setText(currentShirtText + shirtTempcbx.getSelectedItem().toString());</span>
+<span class="nc" id="L263">			currentPantsLbl.setText(currentPantsText + pantsTempcbx.getSelectedItem().toString());</span>
+				
+<span class="nc" id="L265">			p.repaint();</span>
+<span class="nc" id="L266">			jp.repaint();</span>
+<span class="nc" id="L267">			jpl.repaint();</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		} else if (e.getSource() == shirtTempcbx) {</span>
+<span class="nc" id="L269">			colorRules(shirtTempcbx.getSelectedIndex());</span>
+<span class="nc" id="L270">			currentShirtLbl.setText(currentShirtText + shirtTempcbx.getSelectedItem().toString());</span>
+			
+<span class="nc" id="L272">			jp.repaint();</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		} else if (e.getSource() == pantsTempcbx) {</span>
+<span class="nc" id="L274">			colorRules(pantsTempcbx.getSelectedIndex());</span>
+<span class="nc" id="L275">			currentPantsLbl.setText(currentPantsText + pantsTempcbx.getSelectedItem().toString());</span>
+			
+<span class="nc" id="L277">			jpl.repaint();</span>
+		}
+<span class="nc" id="L279">	}</span>
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>
