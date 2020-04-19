@@ -14,13 +14,12 @@ public class CoolingUnit extends Thread {
 	
 
 	//Constructor
-	public CoolingUnit(String clothing, String pos) {
+	public CoolingUnit() {
 		running = false;
-		type = clothing;
-		position = pos;
+		type = "";
+		position = "";
 	}
 	
-
 	public void run() {
 		
 	}
@@ -29,11 +28,11 @@ public class CoolingUnit extends Thread {
 	public boolean getRunningStatus() {
 		return running;
 	}
-	//Used for unit testing.
+	
 	public String getType() {
 		return type;
 	}
-	//Used for unit testing.
+	
 	public String getPosition() {
 		return position;
 	}
@@ -43,6 +42,13 @@ public class CoolingUnit extends Thread {
 		running = runVal;
 	}
 	
+	public void setType(String clothing) {
+		type = clothing;
+	}
+	
+	public void setPos(String pos) {
+		position = pos;
+	}
 	
 	//Methods
 	public boolean startCooling() {
@@ -77,7 +83,7 @@ public class CoolingUnit extends Thread {
 		//return if the status changed.
 		return statusChanged;
 		
-	}
+	}	
 	
 	private void userNotification() {
 		if(type.equals("shirt")) {

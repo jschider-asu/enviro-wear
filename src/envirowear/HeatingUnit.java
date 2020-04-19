@@ -13,26 +13,28 @@ public class HeatingUnit extends Thread {
 	private String position;
 	
 	//Constructor
-	public HeatingUnit(String clothing, String pos) {
+	public HeatingUnit() {
 		running = false;
-		type = clothing;
-		position = pos;
+		type = "";
+		position = "";
 	}
 	
 	public void run() {
 
 	}
-
-
+		
+	
 	//Getters
 	public boolean getRunningStatus() {
 		return running;
 	}
-	//Used for unit testing.
+	
+	//used for unit testing
 	public String getType() {
 		return type;
 	}
-	//Used for unit testing.
+	
+	//used for unit testing
 	public String getPosition() {
 		return position;
 	}
@@ -76,6 +78,14 @@ public class HeatingUnit extends Thread {
 		//return if the status changed.
 		return statusChanged;
 		
+	}
+	
+	public void setType(String clothing) {
+		type = clothing;
+	}
+	
+	public void setPos(String pos) {
+		position = pos;
 	}
 	
 	private void userNotification() {

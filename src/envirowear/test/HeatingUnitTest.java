@@ -18,24 +18,24 @@ class HeatingUnitTest {
 	@Test
 	void testHeatingUnit() {
 		//Need to test that the three member vars where created.
-		HeatingUnit hu = new HeatingUnit("shirt","front");
+		HeatingUnit hu = new HeatingUnit();
 		
-		assertEquals("shirt",hu.getType(),"Constructor failed to initialize correctly.");
-		assertEquals("front",hu.getPosition(),"Constructor failed to initialize correctly.");
+		assertEquals("",hu.getType(),"Constructor failed to initialize correctly.");
+		assertEquals("",hu.getPosition(),"Constructor failed to initialize correctly.");
 		assertEquals(false,hu.getRunningStatus(),"Constructor failed to initialize correctly.");
 	}
 
 	@Test
 	void testGetRunningStatus() {
 		//Running[Status] defaults to false;
-		HeatingUnit hu = new HeatingUnit("shirt","front");
+		HeatingUnit hu = new HeatingUnit();
 		
 		assertEquals(false, hu.getRunningStatus(), "The status did not return correctly.");
 	}
 
 	@Test
 	void testStartHeating() {
-		HeatingUnit hu = new HeatingUnit("shirt","front");
+		HeatingUnit hu = new HeatingUnit();
 		
 		assertEquals(true, hu.startHeating(),"Failed to start cooling properly.");
 		
@@ -44,7 +44,7 @@ class HeatingUnitTest {
 
 	@Test
 	void testStopHeating() {
-		HeatingUnit hu = new HeatingUnit("shirt","front");
+		HeatingUnit hu = new HeatingUnit();
 		
 		hu.startHeating();
 		

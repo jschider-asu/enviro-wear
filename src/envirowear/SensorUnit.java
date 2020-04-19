@@ -20,94 +20,103 @@ public class SensorUnit extends Thread {
 	private boolean back_cool;
 	private boolean e_heating;
 	private boolean e_cooling;
+	private boolean running;
+	HeatingUnit hu_front = new HeatingUnit();
+	HeatingUnit hu_back = new HeatingUnit();
+	CoolingUnit cu_front = new CoolingUnit();
+	CoolingUnit cu_back = new CoolingUnit();
 	
 	//Constructor
-	public SensorUnit(String clothing, int desiredTemperature) {
-		desiredTemp = desiredTemperature;
+	public SensorUnit() {
+		desiredTemp = 0;
 		setHeaterStatus(false);
 		setCoolerStatus(false);
 		setEmergencyOverride(false);
-		type = clothing;
+		type = "";
 		front_temp = 75;
 		back_temp = 75;
 		front_cool = false;
 		back_cool = false;
 		e_heating = false;
 		e_cooling = false;
+		running = true;
 	}
 	
 	public void run() {
-		HeatingUnit hu_front = new HeatingUnit(type, "front");
+		hu_front.setType(type);
+		hu_front.setPos("front");
+		hu_back.setType(type);
+		hu_back.setPos("back");
+		cu_front.setType(type);
+		cu_front.setPos("front");
+		cu_back.setType(type);
+		cu_back.setPos("back");
 		hu_front.start();
-		HeatingUnit hu_back = new HeatingUnit(type, "back");
 		hu_back.start();
-		CoolingUnit cu_front = new CoolingUnit(type, "front");
 		cu_front.start();
-		CoolingUnit cu_back = new CoolingUnit(type, "back");
 		cu_back.start();
 		
 		
 		
-		while(currentThread().isAlive()) {
+		while(running == true) {
 			userNotification();
-			
-			if(getEmergencyOverride() == true) {
-				if(e_heating == true) {
-					hu_front.startHeating();
-					hu_back.startHeating();
-					cu_front.stopCooling();
-					cu_back.stopCooling();
-					front_cool = false;
-					back_cool = false;
-				} else if (e_cooling == true) {
-					cu_front.startCooling();
-					cu_back.startCooling();
-					hu_front.stopHeating();
-					hu_back.stopHeating();
-					front_cool = true;
-					back_cool = true;
+				if(getEmergencyOverride() == true) {
+					if(e_heating == true) {
+						hu_front.startHeating();
+						hu_back.startHeating();
+						cu_front.stopCooling();
+						cu_back.stopCooling();
+						front_cool = false;
+						back_cool = false;
+					} else if (e_cooling == true) {
+						cu_front.startCooling();
+						cu_back.startCooling();
+						hu_front.stopHeating();
+						hu_back.stopHeating();
+						front_cool = true;
+						back_cool = true;
+					} else {
+						System.out.println("An error has been detected in the emergency override system");
+					}
+					
 				} else {
-					System.out.println("An error has been detected in the emergency override system");
+				
+					if(getCurrentFrontTemperature() > getDesiredTemp()) {
+						cu_front.startCooling();
+						hu_front.stopHeating();
+						front_cool = true;
+					} else if (getCurrentFrontTemperature() < getDesiredTemp()) {
+						cu_front.stopCooling();
+						hu_front.startHeating();
+						front_cool = false;
+					} else {
+						cu_front.stopCooling();
+						hu_front.stopHeating();
+					}
+					
+					if(getCurrentBackTemperature() > getDesiredTemp()) {
+						cu_back.startCooling();
+						hu_back.stopHeating();
+						back_cool = true;
+					} else if (getCurrentBackTemperature() < getDesiredTemp()) {
+						cu_back.stopCooling();
+						hu_back.startHeating();
+						back_cool = false;
+					} else {
+						cu_back.stopCooling();
+						hu_back.stopHeating();
+					}
 				}
 				
-			} else {
-			
-				if(getCurrentFrontTemperature() > getDesiredTemp()) {
-					cu_front.startCooling();
-					hu_front.stopHeating();
-					front_cool = true;
-				} else if (getCurrentFrontTemperature() < getDesiredTemp()) {
-					cu_front.stopCooling();
-					hu_front.startHeating();
-					front_cool = false;
-				} else {
-					cu_front.stopCooling();
-					hu_front.stopHeating();
-				}
+				frontTemperatureSensor();
+				backTemperatureSensor();
 				
-				if(getCurrentBackTemperature() > getDesiredTemp()) {
-					cu_back.startCooling();
-					hu_back.stopHeating();
-					back_cool = true;
-				} else if (getCurrentBackTemperature() < getDesiredTemp()) {
-					cu_back.stopCooling();
-					hu_back.startHeating();
-					back_cool = false;
-				} else {
-					cu_back.stopCooling();
-					hu_back.stopHeating();
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			}
-			
-			frontTemperatureSensor();
-			backTemperatureSensor();
-			
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
@@ -133,6 +142,10 @@ public class SensorUnit extends Thread {
 	public void setDesiredTemp(int tempVal) {
 		desiredTemp = tempVal;
 	}	
+	
+	public void setType(String clothing) {
+		type = clothing;
+	}
 
 	public void setCoolerStatus(boolean status) {
 		coolerStatus = status;
@@ -179,6 +192,11 @@ public class SensorUnit extends Thread {
 			back_temp = back_temp + 1;
 		}
 	}
+	
+	public void setRunning(boolean run) {
+		running = run;
+	}
+	
 	
 	private void userNotification() {
 		if(type.equals("shirt")) {

@@ -19,6 +19,8 @@ public class EmergencySensorUnit extends Thread {
 	private boolean raiseBodyTemp;
 	private int desiredTemperature;
 	private String type = "";
+	private boolean running;
+	SensorUnit su= new SensorUnit();
 	
 	
 	public EmergencySensorUnit(String clothing) {
@@ -30,56 +32,62 @@ public class EmergencySensorUnit extends Thread {
 		raiseBodyTemp = false;
 		type = clothing;
 		desiredTemperature = 0;
+		running = true;
+		
 	}
 	
 	public void run() {
-		SensorUnit su= new SensorUnit(type, desiredTemperature);
+		su.setDesiredTemp(desiredTemperature);
+		su.setType(type);
 		su.start();
-		while (currentThread().isAlive()) {
-			bodyTemperatureSensor();
-			userNotificationTemp();	
-			if(getCurrentBodyTemperature() < 95.5) {
-				if(getE_heaterStatus() != true) {
-					setOverride(true);
-					setE_heaterStatus(true);
-					raiseBodyTemp();
-					su.setEmergencyOverride(true);
-					su.setEmergencyHeating(true);
-					userNotification(true, "heating");
-					
-				}
-			} else if (getCurrentBodyTemperature() > 102.5) {
-				if(getE_coolerStatus() != true) {
-					setOverride(true);
-					setE_coolerStatus(true);
-					lowerBodyTemp();
-					lowerBodyTemp = true;
-					su.setEmergencyOverride(true);
-					su.setEmergencyCooling(true);
-					userNotification(true, "cooling");
-				}
-			} else {
-				if(getOverride() == true && bodyTemp > 99 || bodyTemp < 98) {
+		while (running == true) {
+				su.setRunning(true);
+				bodyTemperatureSensor();
+				userNotificationTemp();	
+				if(getCurrentBodyTemperature() < 95.5) {
+					if(getE_heaterStatus() != true) {
+						setOverride(true);
+						setE_heaterStatus(true);
+						raiseBodyTemp();
+						su.setEmergencyOverride(true);
+						su.setEmergencyHeating(true);
+						userNotification(true, "heating");
+						
+					}
+				} else if (getCurrentBodyTemperature() > 102.5) {
+					if(getE_coolerStatus() != true) {
+						setOverride(true);
+						setE_coolerStatus(true);
+						lowerBodyTemp();
+						lowerBodyTemp = true;
+						su.setEmergencyOverride(true);
+						su.setEmergencyCooling(true);
+						userNotification(true, "cooling");
+					}
 				} else {
-					if(getE_heaterStatus() == true || getE_coolerStatus() == true) {
-						setOverride(false);
-						setE_heaterStatus(false);
-						su.setEmergencyHeating(false);
-						setE_coolerStatus(false);
-						su.setEmergencyCooling(false);
-						su.setEmergencyOverride(false);
-						lowerBodyTemp = false;
-						raiseBodyTemp = false;
-						userNotification(false, "");
+					if(getOverride() == true && bodyTemp > 99 || bodyTemp < 98) {
+					} else {
+						if(getE_heaterStatus() == true || getE_coolerStatus() == true) {
+							setOverride(false);
+							setE_heaterStatus(false);
+							su.setEmergencyHeating(false);
+							setE_coolerStatus(false);
+							su.setEmergencyCooling(false);
+							su.setEmergencyOverride(false);
+							lowerBodyTemp = false;
+							raiseBodyTemp = false;
+							userNotification(false, "");
+						}
 					}
 				}
-			}
-			
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-			}
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+				}
+				su.setRunning(false);
 		}
+		
 	}
 	
 	//Getters
@@ -93,6 +101,15 @@ public class EmergencySensorUnit extends Thread {
 	
 	public boolean getE_coolerStatus() {
 		return e_coolerStatus;
+	}
+	
+	//used for unit testing
+	public boolean getLowerBodyTemp() {
+		return lowerBodyTemp;
+	}
+	//used for unit testing
+	public boolean getRaiseBodyTemp() {
+		return raiseBodyTemp;
 	}
 	
 	//Setters
@@ -127,16 +144,6 @@ public class EmergencySensorUnit extends Thread {
 		return bodyTemp;
 	}
 	
-	//used in unit testing
-	public boolean getLowerBodyTemp() {
-		return lowerBodyTemp;
-	}
-	//used in unit testing
-	public boolean getRaiseBodyTemp() {
-		return raiseBodyTemp;
-	}
-	
-	
 	private void bodyTemperatureSensor() {
 		if(lowerBodyTemp == true) {
 			bodyTemp = bodyTemp - .5;
@@ -153,6 +160,16 @@ public class EmergencySensorUnit extends Thread {
 	public void raiseBodyTemp() {
 		lowerBodyTemp = false;
 		raiseBodyTemp = true;
+	}
+	
+	public void setRunning(boolean run) {
+		
+		running = run;
+	}
+	
+	public void updateDesiredTemp(int temp) {
+		desiredTemperature = temp;
+		su.setDesiredTemp(temp);
 	}
 	
 	private void userNotification(boolean override, String tempControl) {
