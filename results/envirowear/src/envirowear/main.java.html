@@ -1,362 +1,620 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>main.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">main.java</span></div><h1>main.java</h1><pre class="source lang-java linenums">package envirowear;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>main.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 20, 2020 9:57:59 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">main.java</span></div><h1>main.java</h1><pre class="source lang-java linenums">package envirowear;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Set;
 import java.util.Timer;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
-<span class="nc" id="L10">public class main {</span>
-<span class="fc" id="L11">	private static JLabel shirtEmergency = new JLabel();</span>
-<span class="fc" id="L12">	private static JLabel pantsEmergency = new JLabel();</span>
-<span class="fc" id="L13">	private static JLabel bodyTempShirt = new JLabel();</span>
-<span class="fc" id="L14">	private static JLabel bodyTempPants = new JLabel();</span>
-<span class="fc" id="L15">	private static int desiredShirtTemp = 0;</span>
-<span class="fc" id="L16">	private static int desiredPantsTemp = 0;</span>
-<span class="fc" id="L17">	private static JLabel desiredST = new JLabel();</span>
-<span class="fc" id="L18">	private static JLabel frontST = new JLabel();</span>
-<span class="fc" id="L19">	private static JLabel backST = new JLabel();</span>
-<span class="fc" id="L20">	private static JLabel desiredPT = new JLabel();</span>
-<span class="fc" id="L21">	private static JLabel frontPT = new JLabel();</span>
-<span class="fc" id="L22">	private static JLabel backPT = new JLabel();</span>
-<span class="fc" id="L23">	private static JLabel frontShirt = new JLabel();</span>
-<span class="fc" id="L24">	private static JLabel backShirt = new JLabel();</span>
-<span class="fc" id="L25">	private static JLabel frontPants = new JLabel();</span>
-<span class="fc" id="L26">	private static JLabel backPants = new JLabel();</span>
-<span class="fc" id="L27">	private static JLabel frontSH = new JLabel();</span>
-<span class="fc" id="L28">	private static JLabel frontSC = new JLabel();</span>
-<span class="fc" id="L29">	private static JLabel backSH = new JLabel();</span>
-<span class="fc" id="L30">	private static JLabel backSC = new JLabel();</span>
-<span class="fc" id="L31">	private static JLabel frontPH = new JLabel();</span>
-<span class="fc" id="L32">	private static JLabel frontPC = new JLabel();</span>
-<span class="fc" id="L33">	private static JLabel backPH = new JLabel();</span>
-<span class="fc" id="L34">	private static JLabel backPC = new JLabel();</span>
+<span class="nc" id="L16">public class main {</span>
+<span class="fc" id="L17">	private static JLabel shirtEmergencylbl = new JLabel();</span>
+<span class="fc" id="L18">	private static JLabel pantsEmergencylbl = new JLabel();</span>
+<span class="fc" id="L19">	private static JLabel shirtEmergencyStatus = new JLabel();</span>
+<span class="fc" id="L20">	private static JLabel pantsEmergencyStatus = new JLabel();</span>
+<span class="fc" id="L21">	private static JLabel bodyTempShirtlbl = new JLabel();</span>
+<span class="fc" id="L22">	private static JLabel bodyTempPantslbl = new JLabel();</span>
+<span class="fc" id="L23">	private static JLabel bodyTempShirt = new JLabel();</span>
+<span class="fc" id="L24">	private static JLabel bodyTempPants = new JLabel();</span>
+<span class="fc" id="L25">	private static JLabel btcShirtlbl = new JLabel();</span>
+<span class="fc" id="L26">	private static JLabel btcPantslbl = new JLabel();</span>
+<span class="fc" id="L27">	private static JLabel btsShirtlbl = new JLabel();</span>
+<span class="fc" id="L28">	private static JLabel btsPantslbl = new JLabel();</span>
+<span class="fc" id="L29">	private static int desiredShirtTemp = 75;</span>
+<span class="fc" id="L30">	private static int desiredPantsTemp = 75;</span>
+<span class="fc" id="L31">	private static JLabel dtcShirtlbl = new JLabel();</span>
+<span class="fc" id="L32">	private static JLabel dtcPantslbl = new JLabel();</span>
+<span class="fc" id="L33">	private static JLabel desiredshirtTemp = new JLabel();</span>
+<span class="fc" id="L34">	private static JLabel desiredpantsTemp = new JLabel();</span>
+<span class="fc" id="L35">	private static JLabel ctcShirtTempFront = new JLabel();</span>
+<span class="fc" id="L36">	private static JLabel ctcShirtTempBack = new JLabel();</span>
+<span class="fc" id="L37">	private static JLabel ctcPantsTempFront = new JLabel();</span>
+<span class="fc" id="L38">	private static JLabel ctcPantsTempBack = new JLabel();</span>
 	
-<span class="fc" id="L36">	private static final String[] TEMP_LIST = {&quot;60&quot;,&quot;61&quot;,&quot;62&quot;,&quot;63&quot;,&quot;64&quot;,&quot;65&quot;,&quot;66&quot;,&quot;67&quot;,&quot;68&quot;,&quot;69&quot;,&quot;70&quot;,&quot;71&quot;,&quot;72&quot;,&quot;73&quot;,&quot;74&quot;,&quot;75&quot;,&quot;76&quot;,&quot;77&quot;,&quot;78&quot;,&quot;79&quot;,&quot;80&quot;};</span>
+<span class="fc" id="L40">	private static JLabel scFrontHeater = new JLabel();</span>
+<span class="fc" id="L41">	private static JLabel scBackHeater = new JLabel();</span>
+<span class="fc" id="L42">	private static JLabel scFrontCooler = new JLabel();</span>
+<span class="fc" id="L43">	private static JLabel scBackCooler = new JLabel();</span>
+<span class="fc" id="L44">	private static JLabel scFrontHeaterStatus = new JLabel();</span>
+<span class="fc" id="L45">	private static JLabel scBackHeaterStatus = new JLabel();</span>
+<span class="fc" id="L46">	private static JLabel scFrontCoolerStatus = new JLabel();</span>
+<span class="fc" id="L47">	private static JLabel scBackCoolerStatus = new JLabel();</span>
+	
+	
+<span class="fc" id="L50">	private static JLabel pcFrontHeater = new JLabel();</span>
+<span class="fc" id="L51">	private static JLabel pcBackHeater = new JLabel();</span>
+<span class="fc" id="L52">	private static JLabel pcFrontCooler = new JLabel();</span>
+<span class="fc" id="L53">	private static JLabel pcBackCooler = new JLabel();</span>
+<span class="fc" id="L54">	private static JLabel pcFrontHeaterStatus = new JLabel();</span>
+<span class="fc" id="L55">	private static JLabel pcBackHeaterStatus = new JLabel();</span>
+<span class="fc" id="L56">	private static JLabel pcFrontCoolerStatus = new JLabel();</span>
+<span class="fc" id="L57">	private static JLabel pcBackCoolerStatus = new JLabel();</span>
+
+<span class="fc" id="L59">	private static boolean running;</span>
 	
 	public static void main(String args[]) {
-<span class="fc" id="L39">		EmergencySensorUnit esuShirt = new EmergencySensorUnit(&quot;shirt&quot;);</span>
-<span class="fc" id="L40">		EmergencySensorUnit esuPants = new EmergencySensorUnit(&quot;pants&quot;);</span>
+		TitledBorder title;
+<span class="fc" id="L63">		EmergencySensorUnit esuShirt = new EmergencySensorUnit(&quot;shirt&quot;);</span>
+<span class="fc" id="L64">		EmergencySensorUnit esuPants = new EmergencySensorUnit(&quot;pants&quot;);</span>
+<span class="fc" id="L65">		running = false;</span>
+<span class="fc" id="L66">		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);</span>
+		
+<span class="fc" id="L68">		JFrame m_frame = new JFrame();</span>
+<span class="fc" id="L69">		m_frame.setSize(650, 750);</span>
+<span class="fc" id="L70">		m_frame.setLayout(null);</span>
+<span class="fc" id="L71">		m_frame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L72">		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+		
+		//-----------Power Panel &amp; Components---------------------//
+		
+<span class="fc" id="L76">		JPanel power_panel = new JPanel();</span>
+<span class="fc" id="L77">		power_panel.setLayout(null);</span>
+<span class="fc" id="L78">		power_panel.setBounds(5, 5, 75, 85);</span>
+<span class="fc" id="L79">		title = BorderFactory.createTitledBorder(loweredetched, &quot;System&quot;);</span>
+<span class="fc" id="L80">		power_panel.setBorder(title);</span>
+		
+<span class="fc" id="L82">		ButtonGroup system = new ButtonGroup();</span>
+<span class="fc" id="L83">		JRadioButton on = new JRadioButton(&quot;On&quot;);</span>
+<span class="fc" id="L84">		on.setSelected(false);</span>
+<span class="fc" id="L85">		on.setBounds(10, 20, 50, 30);</span>
+
+<span class="fc" id="L87">		JRadioButton off = new JRadioButton(&quot;Off&quot;);</span>
+<span class="fc" id="L88">		off.setSelected(true);</span>
+<span class="fc" id="L89">		off.setBounds(10, 45, 50, 30);</span>
+		
+<span class="fc" id="L91">		power_panel.add(on);</span>
+<span class="fc" id="L92">		system.add(on);</span>
+<span class="fc" id="L93">		power_panel.add(off);</span>
+<span class="fc" id="L94">		system.add(off);</span>
 		
 		
-<span class="fc" id="L43">		JFrame m_frame = new JFrame();</span>
-<span class="fc" id="L44">		m_frame.setSize(900, 600);</span>
-<span class="fc" id="L45">		m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+		//------Emergency Panel &amp; Components-----------------//
 		
-<span class="fc" id="L47">		JPanel m_panel = new JPanel();</span>
-<span class="fc" id="L48">		m_panel.setLayout(null);</span>
-<span class="fc" id="L49">		m_panel.setSize(800,600);</span>
+<span class="fc" id="L99">		JPanel emergency_panel = new JPanel();</span>
+<span class="fc" id="L100">		emergency_panel.setLayout(null);</span>
+<span class="fc" id="L101">		emergency_panel.setBounds(100, 5, 200, 85);</span>
+<span class="fc" id="L102">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Emergency Status&quot;);</span>
+<span class="fc" id="L103">		emergency_panel.setBorder(title);</span>
 		
-<span class="fc" id="L51">		JLabel shirtLabel = new JLabel(&quot;Enter Desired Shirt Temp: &quot;);</span>
-<span class="fc" id="L52">		shirtLabel.setBounds(10, 10, 200, 30);</span>
-<span class="fc" id="L53">		JLabel pantsLabel = new JLabel(&quot;Enter Desired Pants Temp: &quot;);</span>
-<span class="fc" id="L54">		pantsLabel.setBounds(10, 50, 200, 30);</span>
-		//JTextArea shirtTemp = new JTextArea();
-<span class="fc" id="L56">		JComboBox&lt;String&gt; shirtTemp = new JComboBox&lt;String&gt;(TEMP_LIST);</span>
-<span class="fc" id="L57">		shirtTemp.setSelectedIndex(12);</span>
-<span class="fc" id="L58">		shirtTemp.setBounds(170, 15, 150, 20);</span>
-		//JTextArea pantsTemp = new JTextArea();
-<span class="fc" id="L60">		JComboBox&lt;String&gt; pantsTemp = new JComboBox&lt;String&gt;(TEMP_LIST);</span>
-<span class="fc" id="L61">		pantsTemp.setSelectedIndex(12);</span>
-<span class="fc" id="L62">		pantsTemp.setBounds(170, 55, 150, 20);</span>
-<span class="fc" id="L63">		JButton start_simulation = new JButton(&quot;Start&quot;);</span>
-		
-<span class="fc" id="L65">		bodyTempShirt.setText(&quot;Shirt Body Temp: &quot;);</span>
-<span class="fc" id="L66">		bodyTempShirt.setBounds(450, 10, 200, 30);</span>
-<span class="fc" id="L67">		bodyTempPants.setText(&quot;Pants Body Temp: &quot;);</span>
-<span class="fc" id="L68">		bodyTempPants.setBounds(450, 50, 200, 30);</span>
-<span class="fc" id="L69">		shirtEmergency.setForeground(Color.GREEN);</span>
-<span class="fc" id="L70">		shirtEmergency.setBounds(650, 10, 300, 30);</span>
-<span class="fc" id="L71">		pantsEmergency.setForeground(Color.green);</span>
-<span class="fc" id="L72">		pantsEmergency.setBounds(650, 50, 300, 30);</span>
-<span class="fc" id="L73">		JButton lowerBodyTempShirt = new JButton(&quot;Lower Body Temp Shirt&quot;);</span>
-<span class="fc" id="L74">		lowerBodyTempShirt.setBounds(450, 100, 175, 30);</span>
-<span class="fc" id="L75">		JButton raiseBodyTempShirt = new JButton(&quot;Raise Body Temp Shirt&quot;);</span>
-<span class="fc" id="L76">		raiseBodyTempShirt.setBounds(650, 100, 175, 30);</span>
-<span class="fc" id="L77">		JButton lowerBodyTempPants = new JButton(&quot;Lower Body Temp Pants&quot;);</span>
-<span class="fc" id="L78">		lowerBodyTempPants.setBounds(450, 150, 175, 30);</span>
-<span class="fc" id="L79">		JButton raiseBodyTempPants = new JButton(&quot;Raise Body Temp Pants&quot;);</span>
-<span class="fc" id="L80">		raiseBodyTempPants.setBounds(650, 150, 175, 30);</span>
+<span class="fc" id="L105">		shirtEmergencylbl.setText(&quot;Shirt State:&quot;);</span>
+<span class="fc" id="L106">		shirtEmergencylbl.setBounds(5, 20, 75, 30);</span>
+<span class="fc" id="L107">		pantsEmergencylbl.setText(&quot;Pants State:&quot;);</span>
+<span class="fc" id="L108">		pantsEmergencylbl.setBounds(5, 50, 75, 30);</span>
 		
 		
-<span class="fc" id="L83">		desiredST.setText(&quot;Shirts Desired Temp: &quot;);</span>
-<span class="fc" id="L84">		desiredST.setBounds(10, 200, 200, 30);</span>
-<span class="fc" id="L85">		desiredPT.setText(&quot;Pants Desired Temp: &quot;);</span>
-<span class="fc" id="L86">		desiredPT.setBounds(10, 250, 200, 30);</span>
-<span class="fc" id="L87">		frontST.setText(&quot;Shirt Front Current Temp: &quot;);</span>
-<span class="fc" id="L88">		frontST.setBounds(200, 200, 200, 30);</span>
-<span class="fc" id="L89">		backST.setText(&quot;Shirt Back Current Temp: &quot;);</span>
-<span class="fc" id="L90">		backST.setBounds(400, 200, 200, 30);</span>
-<span class="fc" id="L91">		frontPT.setText(&quot;Pants Front Current Temp:&quot;);</span>
-<span class="fc" id="L92">		frontPT.setBounds(200, 250, 200, 30);</span>
-<span class="fc" id="L93">		backPT.setText(&quot;Pants Back Current Temp: &quot;);</span>
-<span class="fc" id="L94">		backPT.setBounds(400, 250, 200, 30);</span>
+<span class="fc" id="L111">		shirtEmergencyStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L112">		shirtEmergencyStatus.setBounds(80, 20, 100, 30);</span>
+<span class="fc" id="L113">		pantsEmergencyStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L114">		pantsEmergencyStatus.setBounds(80, 50, 100, 30);</span>
 		
-<span class="fc" id="L96">		frontShirt.setText(&quot;Front Shirt: &quot;);</span>
-<span class="fc" id="L97">		frontShirt.setBounds(10, 300, 200, 30);</span>
-<span class="fc" id="L98">		frontSH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L99">		frontSH.setBounds(200, 300, 200, 30);</span>
-<span class="fc" id="L100">		frontSC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L101">		frontSC.setBounds(400, 300, 200, 30);</span>
-<span class="fc" id="L102">		backShirt.setText(&quot;Back Shirt: &quot;);</span>
-<span class="fc" id="L103">		backShirt.setBounds(10, 350, 200, 30);</span>
-<span class="fc" id="L104">		backSH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L105">		backSH.setBounds(200, 350, 200, 30);</span>
-<span class="fc" id="L106">		backSC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L107">		backSC.setBounds(400, 350, 200, 30);</span>
-<span class="fc" id="L108">		frontPants.setText(&quot;Front Pants: &quot;);</span>
-<span class="fc" id="L109">		frontPants.setBounds(10, 400, 200, 30);</span>
-<span class="fc" id="L110">		frontPH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L111">		frontPH.setBounds(200, 400, 200, 30);</span>
-<span class="fc" id="L112">		frontPC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L113">		frontPC.setBounds(400, 400, 200, 30);</span>
-<span class="fc" id="L114">		backPants.setText(&quot;Back Pants:&quot;);</span>
-<span class="fc" id="L115">		backPants.setBounds(10, 450, 200, 30);</span>
-<span class="fc" id="L116">		backPH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L117">		backPH.setBounds(200, 450, 200, 30);</span>
-<span class="fc" id="L118">		backPC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L119">		backPC.setBounds(400, 450, 200, 30);</span>
+<span class="fc" id="L116">		emergency_panel.add(shirtEmergencylbl);</span>
+<span class="fc" id="L117">		emergency_panel.add(pantsEmergencylbl);</span>
+<span class="fc" id="L118">		emergency_panel.add(shirtEmergencyStatus);</span>
+<span class="fc" id="L119">		emergency_panel.add(pantsEmergencyStatus);</span>
+		
+		//---Body Temperature Status Panel &amp; Components------------------------//
+<span class="fc" id="L122">		JPanel bts = new JPanel();</span>
+<span class="fc" id="L123">		bts.setLayout(null);</span>
+<span class="fc" id="L124">		bts.setBounds(325, 5, 175, 85);</span>
+<span class="fc" id="L125">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Body Temperature Status&quot;);</span>
+<span class="fc" id="L126">		bts.setBorder(title);</span>
+		
+<span class="fc" id="L128">		btsShirtlbl.setBounds(5, 20, 150, 30);</span>
+<span class="fc" id="L129">		btsPantslbl.setBounds(5, 50, 150, 30);</span>
+		
+<span class="fc" id="L131">		bts.add(btsShirtlbl);</span>
+<span class="fc" id="L132">		bts.add(btsPantslbl);</span>
 		
 		
-<span class="fc" id="L122">		m_panel.add(shirtLabel);</span>
-<span class="fc" id="L123">		m_panel.add(pantsLabel);</span>
-<span class="fc" id="L124">		m_panel.add(shirtTemp);</span>
-<span class="fc" id="L125">		m_panel.add(pantsTemp);</span>
-<span class="fc" id="L126">		m_panel.add(start_simulation);</span>
-<span class="fc" id="L127">		m_panel.add(bodyTempShirt);</span>
-<span class="fc" id="L128">		m_panel.add(bodyTempPants);</span>
-<span class="fc" id="L129">		m_panel.add(shirtEmergency);</span>
-<span class="fc" id="L130">		m_panel.add(pantsEmergency);</span>
-<span class="fc" id="L131">		m_panel.add(lowerBodyTempShirt);</span>
-<span class="fc" id="L132">		m_panel.add(raiseBodyTempShirt);</span>
-<span class="fc" id="L133">		m_panel.add(lowerBodyTempPants);</span>
-<span class="fc" id="L134">		m_panel.add(raiseBodyTempPants);</span>
-<span class="fc" id="L135">		m_panel.add(desiredST);</span>
-<span class="fc" id="L136">		m_panel.add(frontST);</span>
-<span class="fc" id="L137">		m_panel.add(backST);</span>
-<span class="fc" id="L138">		m_panel.add(desiredPT);</span>
-<span class="fc" id="L139">		m_panel.add(frontPT);</span>
-<span class="fc" id="L140">		m_panel.add(backPT);</span>
-<span class="fc" id="L141">		m_panel.add(frontShirt);</span>
-<span class="fc" id="L142">		m_panel.add(frontSH);</span>
-<span class="fc" id="L143">		m_panel.add(frontSC);</span>
-<span class="fc" id="L144">		m_panel.add(backShirt);</span>
-<span class="fc" id="L145">		m_panel.add(backSH);</span>
-<span class="fc" id="L146">		m_panel.add(backSC);</span>
-<span class="fc" id="L147">		m_panel.add(frontPants);</span>
-<span class="fc" id="L148">		m_panel.add(frontPH);</span>
-<span class="fc" id="L149">		m_panel.add(frontPC);</span>
-<span class="fc" id="L150">		m_panel.add(backPants);</span>
-<span class="fc" id="L151">		m_panel.add(backPH);</span>
-<span class="fc" id="L152">		m_panel.add(backPC);</span>
+//----------Temperatures---------------------//
 		
-<span class="fc" id="L154">		m_frame.add(m_panel);</span>
-<span class="fc" id="L155">		m_frame.setVisible(true);</span>
+<span class="fc" id="L137">		JPanel temperatures = new JPanel();</span>
+<span class="fc" id="L138">		temperatures.setLayout(null);</span>
+<span class="fc" id="L139">		temperatures.setBounds(5, 125, 500, 150);</span>
+<span class="fc" id="L140">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Temperatures&quot;);</span>
+<span class="fc" id="L141">		temperatures.setBorder(title);</span>
 		
-<span class="fc" id="L157">		start_simulation.addActionListener(new ActionListener() {</span>
+		//----Body Temperature Panel &amp; Components----------------//
+		
+<span class="fc" id="L145">		JPanel body_temp = new JPanel();</span>
+<span class="fc" id="L146">		body_temp.setLayout(null);</span>
+<span class="fc" id="L147">		body_temp.setBounds(15, 40, 125, 85);</span>
+<span class="fc" id="L148">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Body Temperature&quot;);</span>
+<span class="fc" id="L149">		body_temp.setBorder(title);</span>
+		
+<span class="fc" id="L151">		bodyTempShirtlbl.setText(&quot;Shirt: &quot;);</span>
+<span class="fc" id="L152">		bodyTempShirtlbl.setBounds(5, 20, 40, 30);</span>
+<span class="fc" id="L153">		bodyTempPantslbl.setText(&quot;Pants: &quot;);</span>
+<span class="fc" id="L154">		bodyTempPantslbl.setBounds(5, 50, 40, 30);</span>
+		
+<span class="fc" id="L156">		bodyTempShirt.setText(&quot;&quot;);</span>
+<span class="fc" id="L157">		bodyTempShirt.setBounds(40, 20, 50, 30);</span>
+<span class="fc" id="L158">		bodyTempPants.setText(&quot;&quot;);</span>
+<span class="fc" id="L159">		bodyTempPants.setBounds(45, 50, 50, 30);</span>
+		
+<span class="fc" id="L161">		body_temp.add(bodyTempShirtlbl);</span>
+<span class="fc" id="L162">		body_temp.add(bodyTempPantslbl);</span>
+<span class="fc" id="L163">		body_temp.add(bodyTempShirt);</span>
+<span class="fc" id="L164">		body_temp.add(bodyTempPants);</span>
+		
+		
+		//----Current Temperature Panel &amp; Components----------//
+<span class="fc" id="L168">		JPanel ctc = new JPanel();</span>
+<span class="fc" id="L169">		ctc.setLayout(null);</span>
+<span class="fc" id="L170">		ctc.setBounds(200, 40, 250, 85);</span>
+<span class="fc" id="L171">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Clothing Current Temperature&quot;);</span>
+<span class="fc" id="L172">		ctc.setBorder(title);</span>
+		
+<span class="fc" id="L174">		ctcShirtTempFront.setText(&quot;Shirt Front: &quot;);</span>
+<span class="fc" id="L175">		ctcShirtTempFront.setBounds(5, 20, 150, 30);</span>
+<span class="fc" id="L176">		ctcShirtTempBack.setText(&quot;Shirt Back: &quot;);</span>
+<span class="fc" id="L177">		ctcShirtTempBack.setBounds(125, 20, 150, 30);</span>
+<span class="fc" id="L178">		ctcPantsTempFront.setText(&quot;Pants Front: &quot;);</span>
+<span class="fc" id="L179">		ctcPantsTempFront.setBounds(5, 50, 150, 30);</span>
+<span class="fc" id="L180">		ctcPantsTempBack.setText(&quot;Pants Back: &quot;);</span>
+<span class="fc" id="L181">		ctcPantsTempBack.setBounds(125, 50, 150, 30);</span>
+		
+<span class="fc" id="L183">		ctc.add(ctcShirtTempFront);</span>
+<span class="fc" id="L184">		ctc.add(ctcShirtTempBack);</span>
+<span class="fc" id="L185">		ctc.add(ctcPantsTempFront);</span>
+<span class="fc" id="L186">		ctc.add(ctcPantsTempBack);</span>
+		
+<span class="fc" id="L188">		temperatures.add(body_temp);</span>
+<span class="fc" id="L189">		temperatures.add(ctc);</span>
+		
+//--------Components Panel------------------//
+<span class="fc" id="L192">		JPanel components = new JPanel();</span>
+<span class="fc" id="L193">		components.setLayout(null);</span>
+<span class="fc" id="L194">		components.setBounds(5, 310, 600, 150);</span>
+<span class="fc" id="L195">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Components&quot;);</span>
+<span class="fc" id="L196">		components.setBorder(title);		</span>
+
+		//----Shirt Components Panel----------//
+<span class="fc" id="L199">		JPanel sc = new JPanel();</span>
+<span class="fc" id="L200">		sc.setLayout(null);</span>
+<span class="fc" id="L201">		sc.setBounds(15, 40, 250, 85);</span>
+<span class="fc" id="L202">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Shirt Components Status&quot;);</span>
+<span class="fc" id="L203">		sc.setBorder(title);</span>
+		
+<span class="fc" id="L205">		scFrontHeater.setText(&quot;Front Heater: &quot;);</span>
+<span class="fc" id="L206">		scFrontHeater.setBounds(5, 20, 150, 30);</span>
+<span class="fc" id="L207">		scFrontHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L208">		scFrontHeaterStatus.setBounds(85, 20, 50, 30);</span>
+<span class="fc" id="L209">		scBackHeater.setText(&quot;Back Heater: &quot;);</span>
+<span class="fc" id="L210">		scBackHeater.setBounds(5, 50, 150, 30);</span>
+<span class="fc" id="L211">		scBackHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L212">		scBackHeaterStatus.setBounds(85, 50, 50, 30);</span>
+<span class="fc" id="L213">		scFrontCooler.setText(&quot;Front Cooler: &quot;);</span>
+<span class="fc" id="L214">		scFrontCooler.setBounds(125, 20, 150, 30);</span>
+<span class="fc" id="L215">		scFrontCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L216">		scFrontCoolerStatus.setBounds(205, 20, 50, 30);</span>
+<span class="fc" id="L217">		scBackCooler.setText(&quot;Back Cooler: &quot;);</span>
+<span class="fc" id="L218">		scBackCooler.setBounds(125, 50, 150, 30);</span>
+<span class="fc" id="L219">		scBackCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L220">		scBackCoolerStatus.setBounds(205, 50, 50, 30);</span>
+		
+<span class="fc" id="L222">		sc.add(scFrontHeater);</span>
+<span class="fc" id="L223">		sc.add(scFrontHeaterStatus);</span>
+<span class="fc" id="L224">		sc.add(scBackHeater);</span>
+<span class="fc" id="L225">		sc.add(scBackHeaterStatus);</span>
+<span class="fc" id="L226">		sc.add(scFrontCooler);</span>
+<span class="fc" id="L227">		sc.add(scFrontCoolerStatus);</span>
+<span class="fc" id="L228">		sc.add(scBackCooler);</span>
+<span class="fc" id="L229">		sc.add(scBackCoolerStatus);</span>
+
+		//----Pants Component Panel---------//
+
+<span class="fc" id="L233">		JPanel pc = new JPanel();</span>
+<span class="fc" id="L234">		pc.setLayout(null);</span>
+<span class="fc" id="L235">		pc.setBounds(325, 40, 250, 85);</span>
+<span class="fc" id="L236">		title = BorderFactory.createTitledBorder(loweredetched, &quot;Pants Components Status&quot;);</span>
+<span class="fc" id="L237">		pc.setBorder(title);</span>
+		
+<span class="fc" id="L239">		pcFrontHeater.setText(&quot;Front Heater: &quot;);</span>
+<span class="fc" id="L240">		pcFrontHeater.setBounds(5, 20, 150, 30);</span>
+<span class="fc" id="L241">		pcFrontHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L242">		pcFrontHeaterStatus.setBounds(85, 20, 50, 30);</span>
+<span class="fc" id="L243">		pcBackHeater.setText(&quot;Back Heater: &quot;);</span>
+<span class="fc" id="L244">		pcBackHeater.setBounds(5, 50, 150, 30);</span>
+<span class="fc" id="L245">		pcBackHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L246">		pcBackHeaterStatus.setBounds(85, 50, 50, 30);</span>
+<span class="fc" id="L247">		pcFrontCooler.setText(&quot;Front Cooler: &quot;);</span>
+<span class="fc" id="L248">		pcFrontCooler.setBounds(125, 20, 150, 30);</span>
+<span class="fc" id="L249">		pcFrontCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L250">		pcFrontCoolerStatus.setBounds(205, 20, 50, 30);</span>
+<span class="fc" id="L251">		pcBackCooler.setText(&quot;Back Cooler: &quot;);</span>
+<span class="fc" id="L252">		pcBackCooler.setBounds(125, 50, 150, 30);</span>
+<span class="fc" id="L253">		pcBackCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L254">		pcBackCoolerStatus.setBounds(205, 50, 50, 30);</span>
+		
+<span class="fc" id="L256">		pc.add(pcFrontHeater);</span>
+<span class="fc" id="L257">		pc.add(pcFrontHeaterStatus);</span>
+<span class="fc" id="L258">		pc.add(pcBackHeater);</span>
+<span class="fc" id="L259">		pc.add(pcBackHeaterStatus);</span>
+<span class="fc" id="L260">		pc.add(pcFrontCooler);</span>
+<span class="fc" id="L261">		pc.add(pcFrontCoolerStatus);</span>
+<span class="fc" id="L262">		pc.add(pcBackCooler);</span>
+<span class="fc" id="L263">		pc.add(pcBackCoolerStatus);</span>
+		
+<span class="fc" id="L265">		components.add(sc);</span>
+<span class="fc" id="L266">		components.add(pc);</span>
+		
+		//----------------USER CONTROLS-----------------------------------//
+<span class="fc" id="L269">				JPanel user_controls = new JPanel();</span>
+<span class="fc" id="L270">				user_controls.setLayout(null);</span>
+<span class="fc" id="L271">				user_controls.setBounds(5, 500, 600, 200);</span>
+<span class="fc" id="L272">				title = BorderFactory.createTitledBorder(loweredetched, &quot;Settings&quot;);</span>
+<span class="fc" id="L273">				user_controls.setBorder(title);</span>
+				
+				//---Body Temperature Controls Panel &amp; Components-------------//
+				
+<span class="fc" id="L277">				JPanel btc = new JPanel();</span>
+<span class="fc" id="L278">				btc.setLayout(null);</span>
+<span class="fc" id="L279">				btc.setBounds(15, 40, 210, 125);</span>
+<span class="fc" id="L280">				title = BorderFactory.createTitledBorder(loweredetched, &quot;Body Temperature Control&quot;);</span>
+<span class="fc" id="L281">				btc.setBorder(title);</span>
+				
+<span class="fc" id="L283">				btcShirtlbl.setText(&quot;Shirt:&quot;);</span>
+<span class="fc" id="L284">				btcShirtlbl.setBounds(5, 30, 40, 30);</span>
+<span class="fc" id="L285">				btcPantslbl.setText(&quot;Pants:&quot;);</span>
+<span class="fc" id="L286">				btcPantslbl.setBounds(5, 75, 40, 30);</span>
+				
+<span class="fc" id="L288">				JButton lowerBodyTempShirt = new JButton(&quot;Lower&quot;);</span>
+<span class="fc" id="L289">				lowerBodyTempShirt.setBounds(45, 30, 70, 30);</span>
+<span class="fc" id="L290">				lowerBodyTempShirt.setEnabled(false);</span>
+<span class="fc" id="L291">				JButton raiseBodyTempShirt = new JButton(&quot;Raise&quot;);</span>
+<span class="fc" id="L292">				raiseBodyTempShirt.setBounds(125, 30, 70, 30);</span>
+<span class="fc" id="L293">				raiseBodyTempShirt.setEnabled(false);</span>
+<span class="fc" id="L294">				JButton lowerBodyTempPants = new JButton(&quot;Lower&quot;);</span>
+<span class="fc" id="L295">				lowerBodyTempPants.setBounds(45, 75, 70, 30);</span>
+<span class="fc" id="L296">				lowerBodyTempPants.setEnabled(false);</span>
+<span class="fc" id="L297">				JButton raiseBodyTempPants = new JButton(&quot;Raise&quot;);</span>
+<span class="fc" id="L298">				raiseBodyTempPants.setBounds(125, 75, 70, 30);</span>
+<span class="fc" id="L299">				raiseBodyTempPants.setEnabled(false);</span>
+				
+<span class="fc" id="L301">				btc.add(btcShirtlbl);</span>
+<span class="fc" id="L302">				btc.add(btcPantslbl);</span>
+<span class="fc" id="L303">				btc.add(lowerBodyTempShirt);</span>
+<span class="fc" id="L304">				btc.add(raiseBodyTempShirt);</span>
+<span class="fc" id="L305">				btc.add(lowerBodyTempPants);</span>
+<span class="fc" id="L306">				btc.add(raiseBodyTempPants);</span>
+				
+
+				//----Desired Temperature Panel &amp; Components----------//
+<span class="fc" id="L310">				JPanel dtc = new JPanel();</span>
+<span class="fc" id="L311">				dtc.setLayout(null);</span>
+<span class="fc" id="L312">				dtc.setBounds(300, 40, 200, 125);</span>
+<span class="fc" id="L313">				title = BorderFactory.createTitledBorder(loweredetched, &quot;Desired Temeprature Control&quot;);</span>
+<span class="fc" id="L314">				dtc.setBorder(title);</span>
+				
+<span class="fc" id="L316">				dtcShirtlbl.setText(&quot;Shirt:&quot;);</span>
+<span class="fc" id="L317">				dtcShirtlbl.setBounds(5, 30, 50, 30);</span>
+<span class="fc" id="L318">				JButton shirttempdec = new JButton(&quot;\u2b9C&quot;);</span>
+<span class="fc" id="L319">				shirttempdec.setBounds(50, 35, 45, 20);</span>
+<span class="fc" id="L320">				desiredshirtTemp.setText(desiredShirtTemp + &quot;F&quot;);</span>
+<span class="fc" id="L321">				desiredshirtTemp.setBounds(108, 30, 40, 30);</span>
+<span class="fc" id="L322">				JButton shirttempinc = new JButton(&quot;\u2b9e&quot;);</span>
+<span class="fc" id="L323">				shirttempinc.setBounds(140, 35, 45, 20);</span>
+				
+<span class="fc" id="L325">				dtcPantslbl.setText(&quot;Pants:&quot;);</span>
+<span class="fc" id="L326">				dtcPantslbl.setBounds(5, 70, 50, 30);</span>
+<span class="fc" id="L327">				JButton pantstempdec = new JButton(&quot;\u2b9C&quot;);</span>
+<span class="fc" id="L328">				pantstempdec.setBounds(50, 75, 45, 20);</span>
+<span class="fc" id="L329">				desiredpantsTemp.setText(desiredPantsTemp + &quot;F&quot;);</span>
+<span class="fc" id="L330">				desiredpantsTemp.setBounds(108, 70, 40, 30);</span>
+<span class="fc" id="L331">				JButton pantstempinc = new JButton(&quot;\u2b9e&quot;);</span>
+<span class="fc" id="L332">				pantstempinc.setBounds(140, 75, 45, 20);</span>
+				
+<span class="fc" id="L334">				dtc.add(dtcShirtlbl);</span>
+<span class="fc" id="L335">				dtc.add(shirttempdec);</span>
+<span class="fc" id="L336">				dtc.add(desiredshirtTemp);</span>
+<span class="fc" id="L337">				dtc.add(shirttempinc);</span>
+<span class="fc" id="L338">				dtc.add(dtcPantslbl);</span>
+<span class="fc" id="L339">				dtc.add(pantstempdec);</span>
+<span class="fc" id="L340">				dtc.add(desiredpantsTemp);</span>
+<span class="fc" id="L341">				dtc.add(pantstempinc);</span>
+				
+<span class="fc" id="L343">				user_controls.add(btc);</span>
+<span class="fc" id="L344">				user_controls.add(dtc);</span>
+		
+<span class="fc" id="L346">		m_frame.add(power_panel);</span>
+<span class="fc" id="L347">		m_frame.add(emergency_panel);</span>
+<span class="fc" id="L348">		m_frame.add(bts);</span>
+<span class="fc" id="L349">		m_frame.add(temperatures);</span>
+<span class="fc" id="L350">		m_frame.add(components);</span>
+<span class="fc" id="L351">		m_frame.add(user_controls);</span>
+<span class="fc" id="L352">		m_frame.setVisible(true);</span>
+		
+<span class="fc" id="L354">		on.addActionListener(new ActionListener() {</span>
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<span class="fc" id="L160">				desiredShirtTemp = Integer.parseInt(shirtTemp.getSelectedItem().toString());</span>
-<span class="fc" id="L161">				desiredPantsTemp = Integer.parseInt(pantsTemp.getSelectedItem().toString());</span>
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">				if(running == false) {</span>
+					
+<span class="fc" id="L359">					esuShirt.setDesiredTemp(desiredShirtTemp);</span>
+<span class="fc" id="L360">					esuPants.setDesiredTemp(desiredPantsTemp);</span>
+<span class="fc" id="L361">					esuShirt.start();</span>
+<span class="fc" id="L362">					esuPants.start();	</span>
+					
+<span class="fc" id="L364">					shirtEmergencyStatus.setText(&quot;Normal&quot;);</span>
+<span class="fc" id="L365">					pantsEmergencyStatus.setText(&quot;Normal&quot;);</span>
+					
+<span class="fc" id="L367">					btsShirtlbl.setText(&quot;Shirt Status: Idle&quot;);</span>
+<span class="fc" id="L368">					btsPantslbl.setText(&quot;Pants Status: Idle&quot;);</span>
+						
+<span class="fc" id="L370">					lowerBodyTempShirt.setEnabled(true);</span>
+<span class="fc" id="L371">					raiseBodyTempShirt.setEnabled(true);</span>
+<span class="fc" id="L372">					lowerBodyTempPants.setEnabled(true);</span>
+<span class="fc" id="L373">					raiseBodyTempPants.setEnabled(true);</span>
+					
+					
+
+<span class="fc" id="L377">					running = true;</span>
+				}
+<span class="fc" id="L379">			}</span>
 				
-<span class="fc" id="L163">				esuShirt.setDesiredTemp(desiredShirtTemp);</span>
-<span class="fc" id="L164">				esuPants.setDesiredTemp(desiredPantsTemp);</span>
-<span class="fc" id="L165">				esuShirt.start();</span>
-<span class="fc" id="L166">				esuPants.start();</span>
-				
-<span class="fc" id="L168">				shirtEmergency.setText(&quot;Body temerature within safe limits&quot;);</span>
-<span class="fc" id="L169">				pantsEmergency.setText(&quot;Body temerature within safe limits&quot;);</span>
-				
-<span class="fc" id="L171">				desiredST.setText(&quot;Shrits Desired Temp: &quot; + desiredShirtTemp);</span>
-<span class="fc" id="L172">				desiredPT.setText(&quot;Pants Desired Temp: &quot; + desiredPantsTemp);</span>
-<span class="fc" id="L173">			}</span>
 		});
-<span class="fc" id="L175">		start_simulation.setBounds(10, 100, 100, 30);</span>
+		
+<span class="fc" id="L383">		off.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L386" title="All 2 branches missed.">				if(running != false) {</span>
+<span class="nc" id="L387">					esuShirt.setRunning(false);</span>
+<span class="nc" id="L388">					esuPants.setRunning(false);</span>
+<span class="nc" id="L389">					running = false;</span>
+<span class="nc" id="L390">					System.exit(0);</span>
+				}
+<span class="nc" id="L392">			}</span>
+		});
+		
+
+		
 	
-<span class="fc" id="L177">		lowerBodyTempShirt.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L398">		lowerBodyTempShirt.addActionListener(new ActionListener() {</span>
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				if(esuShirt.getOverride() == false) {</span>
-<span class="fc" id="L181">					esuShirt.lowerBodyTemp();</span>
-<span class="fc" id="L182">				} else {</span>
-<span class="nc" id="L183">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">				if(esuShirt.getOverride() == false) {</span>
+<span class="fc" id="L402">					btsShirtlbl.setText(&quot;Shirt Status: Lowering&quot;);</span>
+<span class="fc" id="L403">					esuShirt.lowerBodyTemp();</span>
+<span class="fc" id="L404">				} else {</span>
+<span class="fc" id="L405">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
 				}
 				
-<span class="fc" id="L186">			}</span>
+<span class="fc" id="L408">			}</span>
 		});
 		
-<span class="fc" id="L189">		raiseBodyTempShirt.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L411">		raiseBodyTempShirt.addActionListener(new ActionListener() {</span>
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">				if(esuShirt.getOverride() == false) {</span>
-<span class="fc" id="L193">					esuShirt.raiseBodyTemp();</span>
-<span class="fc" id="L194">				} else {</span>
-<span class="nc" id="L195">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">				if(esuShirt.getOverride() == false) {</span>
+<span class="fc" id="L415">					btsShirtlbl.setText(&quot;Shirt Status: Raising&quot;);</span>
+<span class="fc" id="L416">					esuShirt.raiseBodyTemp();</span>
+<span class="fc" id="L417">				} else {</span>
+<span class="fc" id="L418">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
 				}
-<span class="fc" id="L197">			}</span>
+<span class="fc" id="L420">			}</span>
 		});
 		
-<span class="fc" id="L200">		lowerBodyTempPants.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L423">		lowerBodyTempPants.addActionListener(new ActionListener() {</span>
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">				if(esuPants.getOverride() == false) {</span>
-<span class="fc" id="L204">					esuPants.lowerBodyTemp();</span>
-<span class="fc" id="L205">				} else {</span>
-<span class="nc" id="L206">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
-				}
-				
-<span class="fc" id="L209">			}</span>
-		});
-		
-<span class="fc" id="L212">		raiseBodyTempPants.addActionListener(new ActionListener() {</span>
-			@Override
-			public void actionPerformed(ActionEvent e) {
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">				if(esuPants.getOverride() == false) {</span>
-<span class="fc" id="L216">					esuPants.raiseBodyTemp();</span>
-<span class="fc" id="L217">				} else {</span>
-<span class="nc" id="L218">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">				if(esuPants.getOverride() == false) {</span>
+<span class="fc" id="L427">					btsPantslbl.setText(&quot;Pants Status: Lowering&quot;);</span>
+<span class="fc" id="L428">					esuPants.lowerBodyTemp();</span>
+<span class="fc" id="L429">				} else {</span>
+<span class="fc" id="L430">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
 				}
 				
-<span class="fc" id="L221">			}</span>
+<span class="fc" id="L433">			}</span>
+		});
+		
+<span class="fc" id="L436">		raiseBodyTempPants.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="fc bfc" id="L439" title="All 2 branches covered.">				if(esuPants.getOverride() == false) {</span>
+<span class="fc" id="L440">					btsPantslbl.setText(&quot;Pants Status: Raising&quot;);</span>
+<span class="fc" id="L441">					esuPants.raiseBodyTemp();</span>
+<span class="fc" id="L442">				} else {</span>
+<span class="fc" id="L443">					JOptionPane.showMessageDialog(m_frame, &quot;This option is disabled until the emergency override is rescinded!&quot;, &quot;Error!&quot;, JOptionPane.ERROR_MESSAGE);</span>
+				}
+				
+<span class="fc" id="L446">			}</span>
+		});
+		
+<span class="fc" id="L449">		shirttempdec.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="pc bpc" id="L452" title="1 of 2 branches missed.">				if(desiredShirtTemp &gt; 60)</span>
+<span class="fc" id="L453">				desiredShirtTemp--;	</span>
+<span class="fc" id="L454">				desiredshirtTemp.setText(desiredShirtTemp + &quot;F&quot;);</span>
+<span class="fc" id="L455">				esuShirt.updateDesiredTemp(desiredShirtTemp);</span>
+<span class="fc" id="L456">			}</span>
+		});
+	
+<span class="fc" id="L459">		shirttempinc.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">				if(desiredShirtTemp &lt; 90)</span>
+<span class="fc" id="L463">				desiredShirtTemp++;</span>
+<span class="fc" id="L464">				desiredshirtTemp.setText(desiredShirtTemp + &quot;F&quot;);</span>
+<span class="fc" id="L465">				esuShirt.updateDesiredTemp(desiredShirtTemp);</span>
+<span class="fc" id="L466">			}</span>
+		});
+	
+<span class="fc" id="L469">		pantstempdec.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">				if(desiredPantsTemp &gt; 60)</span>
+<span class="fc" id="L473">				desiredPantsTemp--;	</span>
+<span class="fc" id="L474">				desiredpantsTemp.setText(desiredPantsTemp + &quot;F&quot;);</span>
+<span class="fc" id="L475">				esuPants.updateDesiredTemp(desiredPantsTemp);</span>
+<span class="fc" id="L476">			}</span>
+		});
+	
+<span class="fc" id="L479">		pantstempinc.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(ActionEvent e) {
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">				if(desiredPantsTemp &lt; 90)</span>
+<span class="fc" id="L483">			    desiredPantsTemp++;	</span>
+<span class="fc" id="L484">				desiredpantsTemp.setText(desiredPantsTemp + &quot;F&quot;);</span>
+<span class="fc" id="L485">				esuPants.updateDesiredTemp(desiredPantsTemp);</span>
+<span class="fc" id="L486">			}</span>
 		});
 	
 		
 		
-<span class="fc" id="L226">	}</span>
+<span class="fc" id="L491">	}</span>
 	
 	public static void setShirtBodyTemp(double body_temp) {
-<span class="fc" id="L229">		bodyTempShirt.setText(&quot;Shirt Body Temp: &quot; + body_temp);</span>
-<span class="fc" id="L230">	}</span>
+<span class="fc" id="L494">		bodyTempShirt.setText(String.valueOf(body_temp));</span>
+<span class="fc" id="L495">	}</span>
 	
 	public static void setPantsBodyTemp(double body_temp) {
-<span class="fc" id="L233">		bodyTempPants.setText(&quot;Pants Body Temp: &quot; + body_temp);</span>
-<span class="fc" id="L234">	}</span>
+		
+<span class="fc" id="L499">		bodyTempPants.setText(String.valueOf(body_temp));</span>
+<span class="fc" id="L500">	}</span>
 	
 	public static void setShirtEmergencyOverride(boolean override, String type) {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if(override == true) {</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">			if(type.equals(&quot;cooling&quot;)) {</span>
-<span class="fc" id="L239">				shirtEmergency.setForeground(Color.BLUE);</span>
-<span class="fc" id="L240">				shirtEmergency.setText(&quot;&lt;html&gt;Body temperature too high!&lt;br&gt;Emergency cooling active!&lt;/html&gt;&quot;);</span>
-<span class="fc" id="L241">			} else {</span>
-<span class="fc" id="L242">				shirtEmergency.setForeground(Color.RED);</span>
-<span class="fc" id="L243">				shirtEmergency.setText(&quot;&lt;html&gt;Body temperature too low!&lt;br&gt;Emergency heating active!&lt;/html&gt;&quot;);</span>
-			}
-<span class="fc" id="L245">		} else {</span>
-<span class="fc" id="L246">			shirtEmergency.setForeground(Color.GREEN);</span>
-<span class="fc" id="L247">			shirtEmergency.setText(&quot;&lt;html&gt;Body temperature restored!&lt;br&gt;Emergency override ended!&lt;/html&gt;&quot;);</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		if(override == true) {</span>
+<span class="fc" id="L504">			shirtEmergencyStatus.setForeground(Color.RED);</span>
+<span class="fc" id="L505">			shirtEmergencyStatus.setText(&quot;Emergency&quot;);</span>
+<span class="fc" id="L506">			btsShirtlbl.setText(&quot;Shirt Status: Idle&quot;);</span>
+<span class="fc" id="L507">		} else {</span>
+<span class="fc" id="L508">			shirtEmergencyStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L509">			shirtEmergencyStatus.setText(&quot;Normal&quot;);</span>
 		}
-<span class="fc" id="L249">	}</span>
+<span class="fc" id="L511">	}</span>
 	
 	public static void setPantsEmergencyOverride(boolean override, String type) {
-<span class="fc bfc" id="L252" title="All 2 branches covered.">		if(override == true) {</span>
-<span class="fc bfc" id="L253" title="All 2 branches covered.">			if(type.equals(&quot;cooling&quot;)) {</span>
-<span class="fc" id="L254">				pantsEmergency.setForeground(Color.BLUE);</span>
-<span class="fc" id="L255">				pantsEmergency.setText(&quot;&lt;html&gt;Body temperature too high!&lt;br&gt;Emergency cooling active!&lt;/html&gt;&quot;);</span>
-<span class="fc" id="L256">			} else {</span>
-<span class="fc" id="L257">				pantsEmergency.setForeground(Color.RED);</span>
-<span class="fc" id="L258">				pantsEmergency.setText(&quot;&lt;html&gt;Body temperature too low!&lt;br&gt;Emergency heating active!&lt;/html&gt;&quot;);</span>
-			}
-<span class="fc" id="L260">		} else {</span>
-<span class="fc" id="L261">			pantsEmergency.setForeground(Color.GREEN);</span>
-<span class="fc" id="L262">			pantsEmergency.setText(&quot;&lt;html&gt;Body temperature restored!&lt;br&gt;Emergency override ended!&lt;/html&gt;&quot;);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">		if(override == true) {</span>
+<span class="fc" id="L515">			pantsEmergencyStatus.setForeground(Color.RED);</span>
+<span class="fc" id="L516">			pantsEmergencyStatus.setText(&quot;Emergency&quot;);</span>
+<span class="fc" id="L517">			btsPantslbl.setText(&quot;Pants Status: Idle&quot;);</span>
+<span class="fc" id="L518">		} else {</span>
+<span class="fc" id="L519">			pantsEmergencyStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L520">			pantsEmergencyStatus.setText(&quot;Normal&quot;);</span>
 		}
-<span class="fc" id="L264">	}</span>
+<span class="fc" id="L522">	}</span>
 	public static void setCurrentShirtFrontTemp(int temp) {
-<span class="fc" id="L266">		frontST.setText(&quot;Shirt Front Current Temp:&quot; + temp);</span>
-<span class="fc" id="L267">	}</span>
+<span class="fc" id="L524">		ctcShirtTempFront.setText(&quot;Shirt Front: &quot; + temp + &quot;F&quot;);</span>
+<span class="fc" id="L525">	}</span>
 	
 	public static void setCurrentShirtBackTemp(int temp) {
-<span class="fc" id="L270">		backST.setText(&quot;Shirt Back Current Temp:&quot; + temp);</span>
-<span class="fc" id="L271">	}</span>
+<span class="fc" id="L528">		ctcShirtTempBack.setText(&quot;Shirt Back: &quot; + temp + &quot;F&quot;);</span>
+<span class="fc" id="L529">	}</span>
 	
 	public static void setCurrentPantsFrontTemp(int temp) {
-<span class="fc" id="L274">		frontPT.setText(&quot;Pants Front Current Temp:&quot; + temp);</span>
-<span class="fc" id="L275">	}</span>
+<span class="fc" id="L532">		ctcPantsTempFront.setText(&quot;Pants Front: &quot; + temp + &quot;F&quot;);</span>
+<span class="fc" id="L533">	}</span>
 	
 	public static void setCurrentPantsBackTemp(int temp) {
-<span class="fc" id="L278">		backPT.setText(&quot;Pants Back Current Temp:&quot; + temp);</span>
-<span class="fc" id="L279">	}</span>
+<span class="fc" id="L536">		ctcPantsTempBack.setText(&quot;Pants Back: &quot; + temp + &quot;F&quot;);</span>
+<span class="fc" id="L537">	}</span>
 	
 	public static void setShirtHeaterFront(boolean status) {
-<span class="fc bfc" id="L282" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L283">			frontSH.setForeground(Color.black);</span>
-<span class="fc" id="L284">			frontSH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L285">		} else {</span>
-<span class="fc" id="L286">			frontSH.setForeground(Color.GREEN);</span>
-<span class="fc" id="L287">			frontSH.setText(&quot;Heater: On&quot;);</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L541">			scFrontHeaterStatus.setForeground(Color.black);</span>
+<span class="fc" id="L542">			scFrontHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L543">		} else {</span>
+<span class="fc" id="L544">			scFrontHeaterStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L545">			scFrontHeaterStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L289">	}</span>
+<span class="fc" id="L547">	}</span>
 	
 	public static void setShirtHeaterBack(boolean status) {
-<span class="fc bfc" id="L292" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L293">			backSH.setForeground(Color.black);</span>
-<span class="fc" id="L294">			backSH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L295">		} else {</span>
-<span class="fc" id="L296">			backSH.setForeground(Color.GREEN);</span>
-<span class="fc" id="L297">			backSH.setText(&quot;Heater: On&quot;);</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L551">			scBackHeaterStatus.setForeground(Color.black);</span>
+<span class="fc" id="L552">			scBackHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L553">		} else {</span>
+<span class="fc" id="L554">			scBackHeaterStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L555">			scBackHeaterStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L299">	}</span>
+<span class="fc" id="L557">	}</span>
 	
 	public static void setShirtCoolerFront(boolean status) {
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L303">			frontSC.setForeground(Color.black);</span>
-<span class="fc" id="L304">			frontSC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L305">		} else {</span>
-<span class="fc" id="L306">			frontSC.setForeground(Color.GREEN);</span>
-<span class="fc" id="L307">			frontSC.setText(&quot;Cooler: On&quot;);</span>
+<span class="fc bfc" id="L560" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L561">			scFrontCoolerStatus.setForeground(Color.black);</span>
+<span class="fc" id="L562">			scFrontCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L563">		} else {</span>
+<span class="fc" id="L564">			scFrontCoolerStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L565">			scFrontCoolerStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L309">	}</span>
+<span class="fc" id="L567">	}</span>
 	
 	public static void setShirtCoolerBack(boolean status) {
-<span class="fc bfc" id="L312" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L313">			backSC.setForeground(Color.black);</span>
-<span class="fc" id="L314">			backSC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L315">		} else {</span>
-<span class="fc" id="L316">			backSC.setForeground(Color.GREEN);</span>
-<span class="fc" id="L317">			backSC.setText(&quot;Cooler: On&quot;);</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L571">			scBackCoolerStatus.setForeground(Color.black);</span>
+<span class="fc" id="L572">			scBackCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L573">		} else {</span>
+<span class="fc" id="L574">			scBackCoolerStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L575">			scBackCoolerStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L319">	}</span>
+<span class="fc" id="L577">	}</span>
 	
 	public static void setPantsHeaterFront(boolean status) {
-<span class="fc bfc" id="L322" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L323">			frontPH.setForeground(Color.black);</span>
-<span class="fc" id="L324">			frontPH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L325">		} else {</span>
-<span class="fc" id="L326">			frontPH.setForeground(Color.GREEN);</span>
-<span class="fc" id="L327">			frontPH.setText(&quot;Heater: On&quot;);</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L581">			pcFrontHeaterStatus.setForeground(Color.black);</span>
+<span class="fc" id="L582">			pcFrontHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L583">		} else {</span>
+<span class="fc" id="L584">			pcFrontHeaterStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L585">			pcFrontHeaterStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L329">	}</span>
+<span class="fc" id="L587">	}</span>
 	
 	public static void setPantsHeaterBack(boolean status) {
-<span class="fc bfc" id="L332" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L333">			backPH.setForeground(Color.black);</span>
-<span class="fc" id="L334">			backPH.setText(&quot;Heater: Off&quot;);</span>
-<span class="fc" id="L335">		} else {</span>
-<span class="fc" id="L336">			backPH.setForeground(Color.GREEN);</span>
-<span class="fc" id="L337">			backPH.setText(&quot;Heater: On&quot;);</span>
+<span class="fc bfc" id="L590" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L591">			pcBackHeaterStatus.setForeground(Color.black);</span>
+<span class="fc" id="L592">			pcBackHeaterStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L593">		} else {</span>
+<span class="fc" id="L594">			pcBackHeaterStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L595">			pcBackHeaterStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L339">	}</span>
+<span class="fc" id="L597">	}</span>
 	
 	public static void setPantsCoolerFront(boolean status) {
-<span class="fc bfc" id="L342" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L343">			frontPC.setForeground(Color.black);</span>
-<span class="fc" id="L344">			frontPC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L345">		} else {</span>
-<span class="fc" id="L346">			frontPC.setForeground(Color.GREEN);</span>
-<span class="fc" id="L347">			frontPC.setText(&quot;Cooler: On&quot;);</span>
+<span class="fc bfc" id="L600" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L601">			pcFrontCoolerStatus.setForeground(Color.black);</span>
+<span class="fc" id="L602">			pcFrontCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L603">		} else {</span>
+<span class="fc" id="L604">			pcFrontCoolerStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L605">			pcFrontCoolerStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L349">	}</span>
+<span class="fc" id="L607">	}</span>
 	
 	public static void setPantsCoolerBack(boolean status) {
-<span class="fc bfc" id="L352" title="All 2 branches covered.">		if(status == false) {</span>
-<span class="fc" id="L353">			backPC.setForeground(Color.black);</span>
-<span class="fc" id="L354">			backPC.setText(&quot;Cooler: Off&quot;);</span>
-<span class="fc" id="L355">		} else {</span>
-<span class="fc" id="L356">			backPC.setForeground(Color.GREEN);</span>
-<span class="fc" id="L357">			backPC.setText(&quot;Cooler: On&quot;);</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">		if(status == false) {</span>
+<span class="fc" id="L611">			pcBackCoolerStatus.setForeground(Color.black);</span>
+<span class="fc" id="L612">			pcBackCoolerStatus.setText(&quot;Off&quot;);</span>
+<span class="fc" id="L613">		} else {</span>
+<span class="fc" id="L614">			pcBackCoolerStatus.setForeground(Color.GREEN);</span>
+<span class="fc" id="L615">			pcBackCoolerStatus.setText(&quot;On&quot;);</span>
 		}
-<span class="fc" id="L359">	}</span>
+<span class="fc" id="L617">	}</span>
 	
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 20, 2020 9:57:59 PM)</div></body></html>

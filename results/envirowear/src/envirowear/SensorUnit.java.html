@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SensorUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">SensorUnit.java</span></div><h1>SensorUnit.java</h1><pre class="source lang-java linenums">package envirowear;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SensorUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 20, 2020 9:57:59 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">SensorUnit.java</span></div><h1>SensorUnit.java</h1><pre class="source lang-java linenums">package envirowear;
 
 import java.util.Set;
 
@@ -20,176 +20,194 @@ public class SensorUnit extends Thread {
 	private boolean back_cool;
 	private boolean e_heating;
 	private boolean e_cooling;
+	private boolean running;
+<span class="fc" id="L24">	HeatingUnit hu_front = new HeatingUnit();</span>
+<span class="fc" id="L25">	HeatingUnit hu_back = new HeatingUnit();</span>
+<span class="fc" id="L26">	CoolingUnit cu_front = new CoolingUnit();</span>
+<span class="fc" id="L27">	CoolingUnit cu_back = new CoolingUnit();</span>
 	
 	//Constructor
-<span class="fc" id="L25">	public SensorUnit(String clothing, int desiredTemperature) {</span>
-<span class="fc" id="L26">		desiredTemp = desiredTemperature;</span>
-<span class="fc" id="L27">		setHeaterStatus(false);</span>
-<span class="fc" id="L28">		setCoolerStatus(false);</span>
-<span class="fc" id="L29">		setEmergencyOverride(false);</span>
-<span class="fc" id="L30">		type = clothing;</span>
-<span class="fc" id="L31">		front_temp = 75;</span>
-<span class="fc" id="L32">		back_temp = 75;</span>
-<span class="fc" id="L33">		front_cool = false;</span>
-<span class="fc" id="L34">		back_cool = false;</span>
-<span class="fc" id="L35">		e_heating = false;</span>
-<span class="fc" id="L36">		e_cooling = false;</span>
-<span class="fc" id="L37">	}</span>
+<span class="fc" id="L30">	public SensorUnit() {</span>
+<span class="fc" id="L31">		desiredTemp = 0;</span>
+<span class="fc" id="L32">		setHeaterStatus(false);</span>
+<span class="fc" id="L33">		setCoolerStatus(false);</span>
+<span class="fc" id="L34">		setEmergencyOverride(false);</span>
+<span class="fc" id="L35">		type = &quot;&quot;;</span>
+<span class="fc" id="L36">		front_temp = 75;</span>
+<span class="fc" id="L37">		back_temp = 75;</span>
+<span class="fc" id="L38">		front_cool = false;</span>
+<span class="fc" id="L39">		back_cool = false;</span>
+<span class="fc" id="L40">		e_heating = false;</span>
+<span class="fc" id="L41">		e_cooling = false;</span>
+<span class="fc" id="L42">		running = true;</span>
+<span class="fc" id="L43">	}</span>
 	
 	public void run() {
-<span class="fc" id="L40">		HeatingUnit hu_front = new HeatingUnit(type, &quot;front&quot;);</span>
-<span class="fc" id="L41">		hu_front.start();</span>
-<span class="fc" id="L42">		HeatingUnit hu_back = new HeatingUnit(type, &quot;back&quot;);</span>
-<span class="fc" id="L43">		hu_back.start();</span>
-<span class="fc" id="L44">		CoolingUnit cu_front = new CoolingUnit(type, &quot;front&quot;);</span>
-<span class="fc" id="L45">		cu_front.start();</span>
-<span class="fc" id="L46">		CoolingUnit cu_back = new CoolingUnit(type, &quot;back&quot;);</span>
-<span class="fc" id="L47">		cu_back.start();</span>
+<span class="fc" id="L46">		hu_front.setType(type);</span>
+<span class="fc" id="L47">		hu_front.setPos(&quot;front&quot;);</span>
+<span class="fc" id="L48">		hu_back.setType(type);</span>
+<span class="fc" id="L49">		hu_back.setPos(&quot;back&quot;);</span>
+<span class="fc" id="L50">		cu_front.setType(type);</span>
+<span class="fc" id="L51">		cu_front.setPos(&quot;front&quot;);</span>
+<span class="fc" id="L52">		cu_back.setType(type);</span>
+<span class="fc" id="L53">		cu_back.setPos(&quot;back&quot;);</span>
+<span class="fc" id="L54">		hu_front.start();</span>
+<span class="fc" id="L55">		hu_back.start();</span>
+<span class="fc" id="L56">		cu_front.start();</span>
+<span class="fc" id="L57">		cu_back.start();</span>
 		
 		
 		
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		while(currentThread().isAlive()) {</span>
-<span class="fc" id="L52">			userNotification();</span>
-			
-<span class="fc bfc" id="L54" title="All 2 branches covered.">			if(getEmergencyOverride() == true) {</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">				if(e_heating == true) {</span>
-<span class="fc" id="L56">					hu_front.startHeating();</span>
-<span class="fc" id="L57">					hu_back.startHeating();</span>
-<span class="fc" id="L58">					cu_front.stopCooling();</span>
-<span class="fc" id="L59">					cu_back.stopCooling();</span>
-<span class="fc" id="L60">					front_cool = false;</span>
-<span class="fc" id="L61">					back_cool = false;</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">				} else if (e_cooling == true) {</span>
-<span class="fc" id="L63">					cu_front.startCooling();</span>
-<span class="fc" id="L64">					cu_back.startCooling();</span>
-<span class="fc" id="L65">					hu_front.stopHeating();</span>
-<span class="fc" id="L66">					hu_back.stopHeating();</span>
-<span class="fc" id="L67">					front_cool = true;</span>
-<span class="fc" id="L68">					back_cool = true;</span>
-<span class="fc" id="L69">				} else {</span>
-<span class="nc" id="L70">					System.out.println(&quot;An error has been detected in the emergency override system&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		while(running == true) {</span>
+<span class="fc" id="L62">			userNotification();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">				if(getEmergencyOverride() == true) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">					if(e_heating == true) {</span>
+<span class="fc" id="L65">						hu_front.startHeating();</span>
+<span class="fc" id="L66">						hu_back.startHeating();</span>
+<span class="fc" id="L67">						cu_front.stopCooling();</span>
+<span class="fc" id="L68">						cu_back.stopCooling();</span>
+<span class="fc" id="L69">						front_cool = false;</span>
+<span class="fc" id="L70">						back_cool = false;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">					} else if (e_cooling == true) {</span>
+<span class="fc" id="L72">						cu_front.startCooling();</span>
+<span class="fc" id="L73">						cu_back.startCooling();</span>
+<span class="fc" id="L74">						hu_front.stopHeating();</span>
+<span class="fc" id="L75">						hu_back.stopHeating();</span>
+<span class="fc" id="L76">						front_cool = true;</span>
+<span class="fc" id="L77">						back_cool = true;</span>
+<span class="fc" id="L78">					} else {</span>
+<span class="fc" id="L79">						System.out.println(&quot;An error has been detected in the emergency override system&quot;);</span>
+					}
+					
+<span class="fc" id="L82">				} else {</span>
+				
+<span class="fc bfc" id="L84" title="All 2 branches covered.">					if(getCurrentFrontTemperature() &gt; getDesiredTemp()) {</span>
+<span class="fc" id="L85">						cu_front.startCooling();</span>
+<span class="fc" id="L86">						hu_front.stopHeating();</span>
+<span class="fc" id="L87">						front_cool = true;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">					} else if (getCurrentFrontTemperature() &lt; getDesiredTemp()) {</span>
+<span class="fc" id="L89">						cu_front.stopCooling();</span>
+<span class="fc" id="L90">						hu_front.startHeating();</span>
+<span class="fc" id="L91">						front_cool = false;</span>
+<span class="fc" id="L92">					} else {</span>
+<span class="fc" id="L93">						cu_front.stopCooling();</span>
+<span class="fc" id="L94">						hu_front.stopHeating();</span>
+					}
+					
+<span class="fc bfc" id="L97" title="All 2 branches covered.">					if(getCurrentBackTemperature() &gt; getDesiredTemp()) {</span>
+<span class="fc" id="L98">						cu_back.startCooling();</span>
+<span class="fc" id="L99">						hu_back.stopHeating();</span>
+<span class="fc" id="L100">						back_cool = true;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">					} else if (getCurrentBackTemperature() &lt; getDesiredTemp()) {</span>
+<span class="fc" id="L102">						cu_back.stopCooling();</span>
+<span class="fc" id="L103">						hu_back.startHeating();</span>
+<span class="fc" id="L104">						back_cool = false;</span>
+<span class="fc" id="L105">					} else {</span>
+<span class="fc" id="L106">						cu_back.stopCooling();</span>
+<span class="fc" id="L107">						hu_back.stopHeating();</span>
+					}
 				}
 				
-<span class="nc" id="L73">			} else {</span>
-			
-<span class="fc bfc" id="L75" title="All 2 branches covered.">				if(getCurrentFrontTemperature() &gt; getDesiredTemp()) {</span>
-<span class="fc" id="L76">					cu_front.startCooling();</span>
-<span class="fc" id="L77">					hu_front.stopHeating();</span>
-<span class="fc" id="L78">					front_cool = true;</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">				} else if (getCurrentFrontTemperature() &lt; getDesiredTemp()) {</span>
-<span class="fc" id="L80">					cu_front.stopCooling();</span>
-<span class="fc" id="L81">					hu_front.startHeating();</span>
-<span class="fc" id="L82">					front_cool = false;</span>
-<span class="fc" id="L83">				} else {</span>
-<span class="fc" id="L84">					cu_front.stopCooling();</span>
-<span class="fc" id="L85">					hu_front.stopHeating();</span>
-				}
+<span class="fc" id="L111">				frontTemperatureSensor();</span>
+<span class="fc" id="L112">				backTemperatureSensor();</span>
 				
-<span class="fc bfc" id="L88" title="All 2 branches covered.">				if(getCurrentBackTemperature() &gt; getDesiredTemp()) {</span>
-<span class="fc" id="L89">					cu_back.startCooling();</span>
-<span class="fc" id="L90">					hu_back.stopHeating();</span>
-<span class="fc" id="L91">					back_cool = true;</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">				} else if (getCurrentBackTemperature() &lt; getDesiredTemp()) {</span>
-<span class="fc" id="L93">					cu_back.stopCooling();</span>
-<span class="fc" id="L94">					hu_back.startHeating();</span>
-<span class="fc" id="L95">					back_cool = false;</span>
-<span class="fc" id="L96">				} else {</span>
-<span class="fc" id="L97">					cu_back.stopCooling();</span>
-<span class="fc" id="L98">					hu_back.stopHeating();</span>
+				try {
+<span class="fc" id="L115">					Thread.sleep(5000);</span>
+<span class="pc" id="L116">				} catch (InterruptedException e) {</span>
+					// TODO Auto-generated catch block
+<span class="nc" id="L118">					e.printStackTrace();</span>
 				}
-			}
-			
-<span class="fc" id="L102">			frontTemperatureSensor();</span>
-<span class="fc" id="L103">			backTemperatureSensor();</span>
-			
-			try {
-<span class="fc" id="L106">				Thread.sleep(5000);</span>
-<span class="pc" id="L107">			} catch (InterruptedException e) {</span>
-				// TODO Auto-generated catch block
-<span class="nc" id="L109">				e.printStackTrace();</span>
-			}
 		}
-<span class="nc" id="L112">	}</span>
+<span class="nc" id="L121">	}</span>
 	
 	
 	//Getters
 	public int getDesiredTemp() {
-<span class="fc" id="L117">		return desiredTemp;</span>
+<span class="fc" id="L126">		return desiredTemp;</span>
 	}
 
 	public boolean getHeaterStatus() {
-<span class="nc" id="L121">		return heaterStatus;</span>
+<span class="nc" id="L130">		return heaterStatus;</span>
 	}
 
 	public boolean getCoolerStatus() {
-<span class="nc" id="L125">		return coolerStatus;</span>
+<span class="nc" id="L134">		return coolerStatus;</span>
 	}
 
 	public boolean getEmergencyOverride() {
-<span class="fc" id="L129">		return e_override;</span>
+<span class="fc" id="L138">		return e_override;</span>
 	}
 
 	//Setters
 	public void setDesiredTemp(int tempVal) {
-<span class="nc" id="L134">		desiredTemp = tempVal;</span>
-<span class="nc" id="L135">	}	</span>
+<span class="fc" id="L143">		desiredTemp = tempVal;</span>
+<span class="fc" id="L144">	}	</span>
+	
+	public void setType(String clothing) {
+<span class="fc" id="L147">		type = clothing;</span>
+<span class="fc" id="L148">	}</span>
 
 	public void setCoolerStatus(boolean status) {
-<span class="fc" id="L138">		coolerStatus = status;</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L151">		coolerStatus = status;</span>
+<span class="fc" id="L152">	}</span>
 
 	public void setHeaterStatus(boolean status) {
-<span class="fc" id="L142">		heaterStatus = status;</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L155">		heaterStatus = status;</span>
+<span class="fc" id="L156">	}</span>
 	
 	//Methods
 	public void setEmergencyOverride(boolean setting) {
-<span class="fc" id="L147">		e_override = setting;</span>
-<span class="fc" id="L148">	}</span>
+<span class="fc" id="L160">		e_override = setting;</span>
+<span class="fc" id="L161">	}</span>
 	
 	public void setEmergencyHeating(boolean setting) {
-<span class="fc" id="L151">		e_heating = setting;</span>
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L164">		e_heating = setting;</span>
+<span class="fc" id="L165">	}</span>
 	
 	public void setEmergencyCooling(boolean setting) {
-<span class="fc" id="L155">		e_cooling = setting;</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L168">		e_cooling = setting;</span>
+<span class="fc" id="L169">	}</span>
 	
 	
 	private int getCurrentFrontTemperature() {
-<span class="fc" id="L160">		return front_temp;</span>
+<span class="fc" id="L173">		return front_temp;</span>
 	}
 	
 	private int getCurrentBackTemperature() {
-<span class="fc" id="L164">		return back_temp;</span>
+<span class="fc" id="L177">		return back_temp;</span>
 	}
 	
 	private void frontTemperatureSensor() {
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if(front_cool == true) {</span>
-<span class="fc" id="L169">			front_temp = front_temp - 1;</span>
-<span class="fc" id="L170">		} else {</span>
-<span class="fc" id="L171">			front_temp = front_temp + 1;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if(front_cool == true) {</span>
+<span class="fc" id="L182">			front_temp = front_temp - 1;</span>
+<span class="fc" id="L183">		} else {</span>
+<span class="fc" id="L184">			front_temp = front_temp + 1;</span>
 		}
-<span class="fc" id="L173">	}</span>
+<span class="fc" id="L186">	}</span>
 	
 	private void backTemperatureSensor() {
-<span class="fc bfc" id="L176" title="All 2 branches covered.">		if(back_cool == true) {</span>
-<span class="fc" id="L177">			back_temp = back_temp - 1;</span>
-<span class="fc" id="L178">		} else {</span>
-<span class="fc" id="L179">			back_temp = back_temp + 1;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		if(back_cool == true) {</span>
+<span class="fc" id="L190">			back_temp = back_temp - 1;</span>
+<span class="fc" id="L191">		} else {</span>
+<span class="fc" id="L192">			back_temp = back_temp + 1;</span>
 		}
-<span class="fc" id="L181">	}</span>
+<span class="fc" id="L194">	}</span>
+	
+	public void setRunning(boolean run) {
+<span class="fc" id="L197">		running = run;</span>
+<span class="fc" id="L198">	}</span>
+	
 	
 	private void userNotification() {
-<span class="fc bfc" id="L184" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
-<span class="fc" id="L185">			main.setCurrentShirtFrontTemp(front_temp);</span>
-<span class="fc" id="L186">			main.setCurrentShirtBackTemp(back_temp);</span>
-<span class="fc" id="L187">		} else {</span>
-<span class="fc" id="L188">			main.setCurrentPantsFrontTemp(front_temp);</span>
-<span class="fc" id="L189">			main.setCurrentPantsBackTemp(back_temp);</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
+<span class="fc" id="L203">			main.setCurrentShirtFrontTemp(front_temp);</span>
+<span class="fc" id="L204">			main.setCurrentShirtBackTemp(back_temp);</span>
+<span class="fc" id="L205">		} else {</span>
+<span class="fc" id="L206">			main.setCurrentPantsFrontTemp(front_temp);</span>
+<span class="fc" id="L207">			main.setCurrentPantsBackTemp(back_temp);</span>
 		}
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L209">	}</span>
 	
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 20, 2020 9:57:59 PM)</div></body></html>

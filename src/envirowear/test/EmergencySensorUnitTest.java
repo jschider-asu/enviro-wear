@@ -98,4 +98,5 @@ class EmergencySensorUnitTest {
 		assertFalse(esu.getRaiseBodyTemp(),"Failed to get raise body temp status.");
 	}
 
+
 }

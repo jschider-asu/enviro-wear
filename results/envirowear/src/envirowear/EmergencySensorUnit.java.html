@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EmergencySensorUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">EmergencySensorUnit.java</span></div><h1>EmergencySensorUnit.java</h1><pre class="source lang-java linenums">package envirowear;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EmergencySensorUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 20, 2020 9:57:59 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">EmergencySensorUnit.java</span></div><h1>EmergencySensorUnit.java</h1><pre class="source lang-java linenums">package envirowear;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,157 +19,174 @@ public class EmergencySensorUnit extends Thread {
 	private boolean raiseBodyTemp;
 	private int desiredTemperature;
 <span class="fc" id="L21">	private String type = &quot;&quot;;</span>
+	private boolean running;
+<span class="fc" id="L23">	SensorUnit su= new SensorUnit();</span>
 	
 	
-<span class="fc" id="L24">	public EmergencySensorUnit(String clothing) {</span>
-<span class="fc" id="L25">		emergencyoverride = false;</span>
-<span class="fc" id="L26">		e_heaterStatus = false;</span>
-<span class="fc" id="L27">		e_coolerStatus = false;</span>
-<span class="fc" id="L28">		bodyTemp = 98.5;</span>
-<span class="fc" id="L29">		lowerBodyTemp = false;</span>
-<span class="fc" id="L30">		raiseBodyTemp = false;</span>
-<span class="fc" id="L31">		type = clothing;</span>
-<span class="fc" id="L32">		desiredTemperature = 0;</span>
-<span class="fc" id="L33">	}</span>
+<span class="fc" id="L26">	public EmergencySensorUnit(String clothing) {</span>
+<span class="fc" id="L27">		emergencyoverride = false;</span>
+<span class="fc" id="L28">		e_heaterStatus = false;</span>
+<span class="fc" id="L29">		e_coolerStatus = false;</span>
+<span class="fc" id="L30">		bodyTemp = 98.5;</span>
+<span class="fc" id="L31">		lowerBodyTemp = false;</span>
+<span class="fc" id="L32">		raiseBodyTemp = false;</span>
+<span class="fc" id="L33">		type = clothing;</span>
+<span class="fc" id="L34">		desiredTemperature = 0;</span>
+<span class="fc" id="L35">		running = true;</span>
+		
+<span class="fc" id="L37">	}</span>
 	
 	public void run() {
-<span class="fc" id="L36">		SensorUnit su= new SensorUnit(type, desiredTemperature);</span>
-<span class="fc" id="L37">		su.start();</span>
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		while (currentThread().isAlive()) {</span>
-<span class="fc" id="L39">			bodyTemperatureSensor();</span>
-<span class="fc" id="L40">			userNotificationTemp();	</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">			if(getCurrentBodyTemperature() &lt; 95.5) {</span>
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">				if(getE_heaterStatus() != true) {</span>
-<span class="fc" id="L43">					setOverride(true);</span>
-<span class="fc" id="L44">					setE_heaterStatus(true);</span>
-<span class="fc" id="L45">					raiseBodyTemp();</span>
-<span class="fc" id="L46">					su.setEmergencyOverride(true);</span>
-<span class="fc" id="L47">					su.setEmergencyHeating(true);</span>
-<span class="fc" id="L48">					userNotification(true, &quot;heating&quot;);</span>
-					
-				}
-<span class="fc bfc" id="L51" title="All 2 branches covered.">			} else if (getCurrentBodyTemperature() &gt; 102.5) {</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">				if(getE_coolerStatus() != true) {</span>
-<span class="fc" id="L53">					setOverride(true);</span>
-<span class="fc" id="L54">					setE_coolerStatus(true);</span>
-<span class="fc" id="L55">					lowerBodyTemp();</span>
-<span class="fc" id="L56">					lowerBodyTemp = true;</span>
-<span class="fc" id="L57">					su.setEmergencyOverride(true);</span>
-<span class="fc" id="L58">					su.setEmergencyCooling(true);</span>
-<span class="fc" id="L59">					userNotification(true, &quot;cooling&quot;);</span>
-				}
-<span class="fc" id="L61">			} else {</span>
-<span class="fc bfc" id="L62" title="All 6 branches covered.">				if(getOverride() == true &amp;&amp; bodyTemp &gt; 99 || bodyTemp &lt; 98) {</span>
-				} else {
-<span class="fc bfc" id="L64" title="All 4 branches covered.">					if(getE_heaterStatus() == true || getE_coolerStatus() == true) {</span>
-<span class="fc" id="L65">						setOverride(false);</span>
-<span class="fc" id="L66">						setE_heaterStatus(false);</span>
-<span class="fc" id="L67">						su.setEmergencyHeating(false);</span>
-<span class="fc" id="L68">						setE_coolerStatus(false);</span>
-<span class="fc" id="L69">						su.setEmergencyCooling(false);</span>
-<span class="fc" id="L70">						su.setEmergencyOverride(false);</span>
-<span class="fc" id="L71">						lowerBodyTemp = false;</span>
-<span class="fc" id="L72">						raiseBodyTemp = false;</span>
-<span class="fc" id="L73">						userNotification(false, &quot;&quot;);</span>
+<span class="fc" id="L40">		su.setDesiredTemp(desiredTemperature);</span>
+<span class="fc" id="L41">		su.setType(type);</span>
+<span class="fc" id="L42">		su.start();</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		while (running == true) {</span>
+<span class="fc" id="L44">				su.setRunning(true);</span>
+<span class="fc" id="L45">				bodyTemperatureSensor();</span>
+<span class="fc" id="L46">				userNotificationTemp();	</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">				if(getCurrentBodyTemperature() &lt; 95.5) {</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">					if(getE_heaterStatus() != true) {</span>
+<span class="fc" id="L49">						setOverride(true);</span>
+<span class="fc" id="L50">						setE_heaterStatus(true);</span>
+<span class="fc" id="L51">						raiseBodyTemp();</span>
+<span class="fc" id="L52">						su.setEmergencyOverride(true);</span>
+<span class="fc" id="L53">						su.setEmergencyHeating(true);</span>
+<span class="fc" id="L54">						userNotification(true, &quot;heating&quot;);</span>
+						
+					}
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				} else if (getCurrentBodyTemperature() &gt; 102.5) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">					if(getE_coolerStatus() != true) {</span>
+<span class="fc" id="L59">						setOverride(true);</span>
+<span class="fc" id="L60">						setE_coolerStatus(true);</span>
+<span class="fc" id="L61">						lowerBodyTemp();</span>
+<span class="fc" id="L62">						lowerBodyTemp = true;</span>
+<span class="fc" id="L63">						su.setEmergencyOverride(true);</span>
+<span class="fc" id="L64">						su.setEmergencyCooling(true);</span>
+<span class="fc" id="L65">						userNotification(true, &quot;cooling&quot;);</span>
+					}
+<span class="fc" id="L67">				} else {</span>
+<span class="fc bfc" id="L68" title="All 6 branches covered.">					if(getOverride() == true &amp;&amp; bodyTemp &gt; 99 || bodyTemp &lt; 98) {</span>
+					} else {
+<span class="fc bfc" id="L70" title="All 4 branches covered.">						if(getE_heaterStatus() == true || getE_coolerStatus() == true) {</span>
+<span class="fc" id="L71">							setOverride(false);</span>
+<span class="fc" id="L72">							setE_heaterStatus(false);</span>
+<span class="fc" id="L73">							su.setEmergencyHeating(false);</span>
+<span class="fc" id="L74">							setE_coolerStatus(false);</span>
+<span class="fc" id="L75">							su.setEmergencyCooling(false);</span>
+<span class="fc" id="L76">							su.setEmergencyOverride(false);</span>
+<span class="fc" id="L77">							lowerBodyTemp = false;</span>
+<span class="fc" id="L78">							raiseBodyTemp = false;</span>
+<span class="fc" id="L79">							userNotification(false, &quot;&quot;);</span>
+						}
 					}
 				}
-			}
-			
-			try {
-<span class="fc" id="L79">				Thread.sleep(5000);</span>
-<span class="pc" id="L80">			} catch (InterruptedException e) {</span>
-			}
+				
+				try {
+<span class="fc" id="L85">					Thread.sleep(5000);</span>
+<span class="pc" id="L86">				} catch (InterruptedException e) {</span>
+				}
+<span class="fc" id="L88">				su.setRunning(false);</span>
 		}
-<span class="nc" id="L83">	}</span>
+		
+<span class="nc" id="L91">	}</span>
 	
 	//Getters
 	public void setDesiredTemp(int temp) {
-<span class="fc" id="L87">		desiredTemperature = temp;</span>
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L95">		desiredTemperature = temp;</span>
+<span class="fc" id="L96">	}</span>
 	
 	public boolean getE_heaterStatus() {
-<span class="fc" id="L91">		return e_heaterStatus;</span>
+<span class="fc" id="L99">		return e_heaterStatus;</span>
 	}
 	
 	public boolean getE_coolerStatus() {
-<span class="fc" id="L95">		return e_coolerStatus;</span>
+<span class="fc" id="L103">		return e_coolerStatus;</span>
+	}
+	
+	//used for unit testing
+	public boolean getLowerBodyTemp() {
+<span class="nc" id="L108">		return lowerBodyTemp;</span>
+	}
+	//used for unit testing
+	public boolean getRaiseBodyTemp() {
+<span class="nc" id="L112">		return raiseBodyTemp;</span>
 	}
 	
 	//Setters
 	public void setE_heaterStatus(boolean e_status) {
-<span class="fc" id="L100">		e_heaterStatus = e_status;</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L117">		e_heaterStatus = e_status;</span>
+<span class="fc" id="L118">	}</span>
 
 	public void setE_coolerStatus(boolean e_status) {
-<span class="fc" id="L104">		e_coolerStatus = e_status;</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L121">		e_coolerStatus = e_status;</span>
+<span class="fc" id="L122">	}</span>
 	
 	//Methods
 	public boolean getHeaterOverrideStatus() {
 		//needs to return the sensor unit statuses?
-<span class="nc" id="L110">		return false;</span>
+<span class="nc" id="L127">		return false;</span>
 	}
 	
 	public boolean getCoolerOverrideStatus() {
 		//needs to return the sensor unit statuses?
-<span class="nc" id="L115">		return false;</span>
+<span class="nc" id="L132">		return false;</span>
 	}
 	
 	private void setOverride(boolean setting) {
-<span class="fc" id="L119">		emergencyoverride = setting;</span>
-<span class="fc" id="L120">	}</span>
+<span class="fc" id="L136">		emergencyoverride = setting;</span>
+<span class="fc" id="L137">	}</span>
 	
 	public boolean getOverride() {
-<span class="fc" id="L123">		return emergencyoverride;</span>
+<span class="fc" id="L140">		return emergencyoverride;</span>
 	}
 	
 	private double getCurrentBodyTemperature() {
-<span class="fc" id="L127">		return bodyTemp;</span>
+<span class="fc" id="L144">		return bodyTemp;</span>
 	}
-	
-	//used in unit testing
-	public boolean getLowerBodyTemp() {
-<span class="nc" id="L132">		return lowerBodyTemp;</span>
-	}
-	//used in unit testing
-	public boolean getRaiseBodyTemp() {
-<span class="nc" id="L136">		return raiseBodyTemp;</span>
-	}
-	
 	
 	private void bodyTemperatureSensor() {
-<span class="fc bfc" id="L141" title="All 2 branches covered.">		if(lowerBodyTemp == true) {</span>
-<span class="fc" id="L142">			bodyTemp = bodyTemp - .5;</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		} else if(raiseBodyTemp == true) {</span>
-<span class="fc" id="L144">			bodyTemp = bodyTemp + .5;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if(lowerBodyTemp == true) {</span>
+<span class="fc" id="L149">			bodyTemp = bodyTemp - .5;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		} else if(raiseBodyTemp == true) {</span>
+<span class="fc" id="L151">			bodyTemp = bodyTemp + .5;</span>
 		}
-<span class="fc" id="L146">	}</span>
+<span class="fc" id="L153">	}</span>
 	
 	public void lowerBodyTemp() {
-<span class="fc" id="L149">		raiseBodyTemp = false;</span>
-<span class="fc" id="L150">		lowerBodyTemp = true;</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc" id="L156">		raiseBodyTemp = false;</span>
+<span class="fc" id="L157">		lowerBodyTemp = true;</span>
+<span class="fc" id="L158">	}</span>
 	
 	public void raiseBodyTemp() {
-<span class="fc" id="L154">		lowerBodyTemp = false;</span>
-<span class="fc" id="L155">		raiseBodyTemp = true;</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L161">		lowerBodyTemp = false;</span>
+<span class="fc" id="L162">		raiseBodyTemp = true;</span>
+<span class="fc" id="L163">	}</span>
+	
+	public void setRunning(boolean run) {
+		
+<span class="nc" id="L167">		running = run;</span>
+<span class="nc" id="L168">	}</span>
+	
+	public void updateDesiredTemp(int temp) {
+<span class="fc" id="L171">		desiredTemperature = temp;</span>
+<span class="fc" id="L172">		su.setDesiredTemp(temp);</span>
+<span class="fc" id="L173">	}</span>
 	
 	private void userNotification(boolean override, String tempControl) {
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
-<span class="fc" id="L160">			main.setShirtEmergencyOverride(override, tempControl);</span>
-<span class="fc" id="L161">		} else {</span>
-<span class="fc" id="L162">			main.setPantsEmergencyOverride(override, tempControl);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
+<span class="fc" id="L177">			main.setShirtEmergencyOverride(override, tempControl);</span>
+<span class="fc" id="L178">		} else {</span>
+<span class="fc" id="L179">			main.setPantsEmergencyOverride(override, tempControl);</span>
 		}
-<span class="fc" id="L164">	}</span>
+<span class="fc" id="L181">	}</span>
 	
 	private void userNotificationTemp() {
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
-<span class="fc" id="L168">			main.setShirtBodyTemp(getCurrentBodyTemperature());</span>
-<span class="fc" id="L169">		} else {</span>
-<span class="fc" id="L170">			main.setPantsBodyTemp(getCurrentBodyTemperature());</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
+<span class="fc" id="L185">			main.setShirtBodyTemp(getCurrentBodyTemperature());</span>
+<span class="fc" id="L186">		} else {</span>
+<span class="fc" id="L187">			main.setPantsBodyTemp(getCurrentBodyTemperature());</span>
 		}
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L189">	}</span>
 	
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 20, 2020 9:57:59 PM)</div></body></html>

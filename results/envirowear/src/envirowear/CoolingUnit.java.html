@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CoolingUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 17, 2020 9:36:31 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">CoolingUnit.java</span></div><h1>CoolingUnit.java</h1><pre class="source lang-java linenums">package envirowear;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CoolingUnit.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">main (Apr 20, 2020 9:57:59 PM)</a> &gt; <a href="../../index.html" class="el_group">envirowear</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">envirowear</a> &gt; <span class="el_source">CoolingUnit.java</span></div><h1>CoolingUnit.java</h1><pre class="source lang-java linenums">package envirowear;
 
 
 /**
@@ -14,85 +14,91 @@ public class CoolingUnit extends Thread {
 	
 
 	//Constructor
-<span class="fc" id="L17">	public CoolingUnit(String clothing, String pos) {</span>
+<span class="fc" id="L17">	public CoolingUnit() {</span>
 <span class="fc" id="L18">		running = false;</span>
-<span class="fc" id="L19">		type = clothing;</span>
-<span class="fc" id="L20">		position = pos;</span>
+<span class="fc" id="L19">		type = &quot;&quot;;</span>
+<span class="fc" id="L20">		position = &quot;&quot;;</span>
 <span class="fc" id="L21">	}</span>
 	
-
 	public void run() {
 		
-<span class="fc" id="L26">	}</span>
+<span class="fc" id="L25">	}</span>
 	
 	//Getters
 	public boolean getRunningStatus() {
-<span class="fc" id="L30">		return running;</span>
+<span class="fc" id="L29">		return running;</span>
 	}
-	//Used for unit testing.
+	
 	public String getType() {
-<span class="nc" id="L34">		return type;</span>
+<span class="nc" id="L33">		return type;</span>
 	}
-	//Used for unit testing.
+	
 	public String getPosition() {
-<span class="nc" id="L38">		return position;</span>
+<span class="nc" id="L37">		return position;</span>
 	}
 	
 	//Setters
 	private void setRunningStatus(boolean runVal) {
-<span class="fc" id="L43">		running = runVal;</span>
-<span class="fc" id="L44">	}</span>
+<span class="fc" id="L42">		running = runVal;</span>
+<span class="fc" id="L43">	}</span>
 	
+	public void setType(String clothing) {
+<span class="fc" id="L46">		type = clothing;</span>
+<span class="fc" id="L47">	}</span>
+	
+	public void setPos(String pos) {
+<span class="fc" id="L50">		position = pos;</span>
+<span class="fc" id="L51">	}</span>
 	
 	//Methods
 	public boolean startCooling() {
-<span class="fc" id="L49">		boolean statusChanged = false;</span>
+<span class="fc" id="L55">		boolean statusChanged = false;</span>
 		
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (!getRunningStatus()) {</span>
-<span class="fc" id="L52">			setRunningStatus(true);</span>
-<span class="fc" id="L53">			statusChanged = true;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (!getRunningStatus()) {</span>
+<span class="fc" id="L58">			setRunningStatus(true);</span>
+<span class="fc" id="L59">			statusChanged = true;</span>
 		}
 		
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		if(statusChanged == true) {</span>
-<span class="fc" id="L57">			userNotification();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if(statusChanged == true) {</span>
+<span class="fc" id="L63">			userNotification();</span>
 		}
 		
 		
 		//return if the status changed.
-<span class="fc" id="L62">		return statusChanged;</span>
+<span class="fc" id="L68">		return statusChanged;</span>
 	}
 	
 	public boolean stopCooling() {
-<span class="fc" id="L66">		boolean statusChanged = false;</span>
+<span class="fc" id="L72">		boolean statusChanged = false;</span>
 		
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (getRunningStatus()) {</span>
-<span class="fc" id="L69">			setRunningStatus(false);</span>
-<span class="fc" id="L70">			statusChanged = true;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (getRunningStatus()) {</span>
+<span class="fc" id="L75">			setRunningStatus(false);</span>
+<span class="fc" id="L76">			statusChanged = true;</span>
 		}
 		
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if(statusChanged == true) {</span>
-<span class="fc" id="L74">			userNotification();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if(statusChanged == true) {</span>
+<span class="fc" id="L80">			userNotification();</span>
 		}
 		
 		//return if the status changed.
-<span class="fc" id="L78">		return statusChanged;</span>
+<span class="fc" id="L84">		return statusChanged;</span>
 		
-	}
+	}	
 	
 	private void userNotification() {
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">			if(position.equals(&quot;front&quot;)) {</span>
-<span class="fc" id="L85">				main.setShirtCoolerFront(getRunningStatus());</span>
-<span class="fc" id="L86">			} else {</span>
-<span class="fc" id="L87">				main.setShirtCoolerBack(getRunningStatus());</span>
-			}
-<span class="fc" id="L89">		} else {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if(type.equals(&quot;shirt&quot;)) {</span>
 <span class="fc bfc" id="L90" title="All 2 branches covered.">			if(position.equals(&quot;front&quot;)) {</span>
-<span class="fc" id="L91">				main.setPantsCoolerFront(getRunningStatus());</span>
+<span class="fc" id="L91">				main.setShirtCoolerFront(getRunningStatus());</span>
 <span class="fc" id="L92">			} else {</span>
-<span class="fc" id="L93">				main.setPantsCoolerBack(getRunningStatus());</span>
+<span class="fc" id="L93">				main.setShirtCoolerBack(getRunningStatus());</span>
+			}
+<span class="fc" id="L95">		} else {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if(position.equals(&quot;front&quot;)) {</span>
+<span class="fc" id="L97">				main.setPantsCoolerFront(getRunningStatus());</span>
+<span class="fc" id="L98">			} else {</span>
+<span class="fc" id="L99">				main.setPantsCoolerBack(getRunningStatus());</span>
 			}
 		}
-<span class="fc" id="L96">	}</span>
+<span class="fc" id="L102">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 17, 2020 9:36:31 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span>main (Apr 20, 2020 9:57:59 PM)</div></body></html>
